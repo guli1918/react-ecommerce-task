@@ -1,0 +1,89 @@
+.topbar {
+	width: 100%;
+	height: 80px;
+	color: gray;
+	position: relative;
+	z-index: 2;
+	display: flex;
+}
+
+.wrapper {
+	padding: 0.5rem 3rem;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	overflow-x: visible;
+	width: 100%;
+}
+
+.left-list {
+	display: flex;
+}
+
+.left-list li {
+	margin: 0 1rem;
+	list-style: none;
+}
+
+.link {
+	text-decoration: none;
+	color: gray;
+	font-size: 0.8rem;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+.link:active {
+	color: #43aa5e;
+}
+
+.right {
+	display: flex;
+	padding: 0.5rem 3rem;
+}
+
+.imgLeft {
+	margin: 0 1rem;
+	display: flex;
+	justify-content: center;
+	align-items: baseline;
+	cursor: pointer;
+}
+
+.imgLeft img {
+	margin: 0 0.1rem;
+}
+
+.dollar {
+	width: 1rem;
+}
+.dollar:hover {
+	color: #43aa5e;
+}
+
+.down {
+	width: 0.5rem;
+}
+
+.cart-topBar {
+	width: 1rem;
+	cursor: pointer;
+}
+
+.line {
+	height: 1.5px;
+	position: absolute;
+	top: 3rem;
+	width: 70px;
+	background-color: #92e9a8;
+}
+
+.text {
+	color: #63db81;
+}
+
+.rotateDollar {
+	transform: rotate(180deg);
+}

@@ -1,0 +1,25 @@
+.currency {
+	width: 6rem;
+	height: 10rem;
+	position: absolute;
+	top: 80px;
+	right: 6.5rem;
+	z-index: 3;
+	background-color: white;
+}
+
+.currency ul li {
+	margin: 1.5rem 0;
+	font-size: 0.8rem;
+	font-weight: 500;
+	list-style: none;
+	cursor: pointer;
+}
+
+.currency ul li:hover {
+	color: #5ece7b;
+}
+
+.currency ul li:active {
+	color: #43aa5e;
+}

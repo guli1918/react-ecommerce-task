@@ -1,0 +1,154 @@
+.singleProduct {
+	/* position: absolute;
+	top: 70px; */
+	padding: 0.5rem 3rem;
+	width: 100%;
+	margin-top: 2rem;
+	box-sizing: border-box;
+}
+
+.product-wrapper {
+	display: flex;
+	justify-content: flex-end;
+	padding: 0.5rem 2rem;
+}
+
+.product-left {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-right: 2rem;
+	flex: 2;
+}
+
+.product-middle {
+	margin-left: 5rem;
+	display: flex;
+	flex: 6;
+}
+
+.product-right {
+	display: flex;
+	flex-direction: column;
+	flex: 5;
+	margin-left: 5rem;
+}
+
+.main-img {
+	width: 45rem;
+	height: 45rem;
+	object-fit: contain;
+}
+
+.secondary-img {
+	width: 7rem;
+	height: 7rem;
+	object-fit: contain;
+	cursor: pointer;
+	margin-bottom: 2rem;
+	padding: 5px;
+}
+
+.secondary-img:hover {
+	opacity: 0.8;
+}
+
+.secondary-active {
+	border-bottom: 1px solid #68dea6;
+	border-bottom-width: 5px;
+}
+
+.right-title-brand {
+	font-weight: 700;
+	font-size: 2rem;
+	margin-bottom: 0.8rem;
+}
+
+.right-title-name {
+	font-weight: 400;
+	margin-bottom: 3rem;
+	font-size: 2rem;
+}
+
+.right-size {
+	width: 100%;
+}
+
+.right-sizes {
+	display: flex;
+	margin-bottom: 3rem;
+}
+
+.right-size-text {
+	margin-bottom: 1rem;
+}
+
+.size-box {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 42px;
+	height: 30px;
+	border: 1px solid transparent;
+	border: 1px solid black;
+	padding: 6px 10px;
+	cursor: pointer;
+	font-weight: 500;
+	margin-right: 20px;
+}
+
+.size-box:hover {
+	background-color: rgb(245, 244, 244);
+	font-weight: 600;
+	background-color: whitesmoke;
+	opacity: 0.5;
+}
+
+.right-price {
+	display: flex;
+	flex-direction: column;
+}
+.right-price-text {
+	font-size: 1rem;
+	margin-bottom: 1.2rem;
+}
+
+.right-price-amount {
+	font-size: 1.5rem;
+}
+
+.add-to-cart {
+	margin: 3rem 0;
+	width: 236px;
+	height: 30px;
+	background-color: #5ece7b;
+	color: white;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 10px 40px;
+	font-weight: 500;
+	cursor: pointer;
+}
+
+.add-to-cart:hover {
+	font-weight: 600;
+	background-color: #6dd388;
+}
+
+.right-desc-text {
+	letter-spacing: 0.4px;
+	line-height: 30px;
+	width: 50%;
+}
+.right-desc-text h1 {
+	line-height: 125%;
+}
+.box-inactive {
+	font-weight: 300;
+	border: 1px solid gray;
+	color: gray;
+	cursor: not-allowed;
+}
+
+/* ---------------------------------------- */

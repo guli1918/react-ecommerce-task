@@ -1,0 +1,149 @@
+.miniCart-main {
+	width: 325px;
+	min-height: 300px;
+	background-color: white;
+	position: absolute;
+	top: 80px;
+	right: 6rem;
+	color: #1d1f22;
+	padding: 20px;
+}
+
+.miniCart-top {
+	margin-bottom: 30px;
+}
+
+.miniCart-top h3 {
+	font-weight: 700;
+	font-size: 16px;
+	line-height: 25.6px;
+}
+
+.miniCart-top h3 span {
+	font-weight: 400;
+}
+
+.miniCart-product {
+	display: flex;
+	height: 142px;
+}
+
+.miniCart-left {
+	display: flex;
+	flex-direction: column;
+	flex: 5;
+	margin-bottom: 30px;
+}
+
+.miniCart-left h3 {
+	font-weight: 300;
+	margin-bottom: 5px;
+}
+
+.miniCart-left-price {
+	margin: 15px 0;
+}
+
+.miniCart-left-attribute {
+	font-size: 14px;
+	margin-top: 10px;
+	width: 24px;
+	min-height: 24px;
+	border: 1px solid #1d1f22;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
+}
+
+.miniCart-middle {
+	display: flex;
+	flex-direction: column;
+	flex: 2;
+	justify-content: space-between;
+	align-items: flex-end;
+}
+
+.miniCart-middle p {
+	width: 24px;
+	height: 24px;
+	border: 1px solid #1d1f22;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
+}
+
+.miniCart-middle h3 {
+	width: 24px;
+	height: 24px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.miniCart-right {
+	display: flex;
+	flex: 4;
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+}
+
+.miniCart-right img {
+	width: 105px;
+	height: 142px;
+	object-fit: cover;
+}
+
+.miniCart-bottom {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+}
+
+.miniCart-bottom-amount {
+	display: flex;
+	justify-content: space-between;
+	margin-top: 30px;
+	font-weight: 700;
+}
+
+.miniCart-bottom-payment {
+	display: flex;
+	justify-content: space-between;
+	margin-top: 30px;
+	font-weight: 600;
+}
+
+.miniCart-bottom-payment p {
+	padding: 16px 32px;
+	min-width: 87px;
+	cursor: pointer;
+}
+
+.miniCart-bottom-payment-left {
+	border: 1px solid black;
+}
+
+.miniCart-bottom-payment-left:hover {
+	font-weight: 700;
+	background-color: rgb(245, 245, 245, 0.1);
+}
+
+.miniCart-bottom-payment-right {
+	color: white;
+	background-color: #43aa5e;
+	border: 1px solid #43aa5e;
+}
+
+.miniCart-bottom-payment-right:hover {
+	background-color: #78da90;
+	border: 1px solid #78da90;
+	font-weight: 800;
+}
+
+.miniCart-link {
+	text-decoration: none;
+	color: inherit;
+}
