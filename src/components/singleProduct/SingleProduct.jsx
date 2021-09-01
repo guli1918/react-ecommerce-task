@@ -76,8 +76,6 @@ export default class SingleProduct extends Component {
 									alt=''
 								/>
 							)}
-							{console.log(this.state.imageDatax)}
-							{console.log(this.state.imageDatay)}
 						</div>
 						<div className='product-right'>
 							<div className='right-title'>

@@ -8,6 +8,7 @@ import SingleProduct from './components/singleProduct/SingleProduct';
 import NotFoundPage from './components/notFoundPage/NotFoundPage';
 import Checkout from './components/checkout/Checkout';
 import Cart from './components/cart/Cart';
+import SuccessPage from './components/successPage/SuccessPage';
 
 class App extends Component {
 	constructor(props) {
@@ -59,11 +60,14 @@ class App extends Component {
 								<SingleProduct currencyType={this.state.currencyType} {...props} />
 							)}
 						/>
+						<Route path='/cart'>
+							<Cart />
+						</Route>
 						<Route path='/checkout'>
 							<Checkout />
 						</Route>
-						<Route path='/cart'>
-							<Cart />
+						<Route path='/success'>
+							<SuccessPage />
 						</Route>
 						<Route path='/404' component={NotFoundPage} />
 						<Redirect to='/404' />

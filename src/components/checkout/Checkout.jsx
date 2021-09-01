@@ -1,7 +1,33 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import './checkout.css';
 
 export default class Checkout extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			formOk: false,
+		};
+		this.handleSubmit = this.handleSubmit.bind(this);
+	}
+	handleChange = (e) => {
+		const name = e.target.name;
+		this.setState({
+			[name]: e.target.value,
+		});
+		const form = this.state;
+
+		form.formCardName &&
+			form.formCardNumber &&
+			form.formDate1 &&
+			form.formDate2 &&
+			form.formCVC &&
+			this.setState({ formOk: true });
+	};
+
+	handleSubmit(e) {
+		e.preventDefault();
+	}
 	render() {
 		return (
 			<div className='checkout'>
@@ -24,32 +50,74 @@ export default class Checkout extends Component {
 				</div>
 				<div className='checkout-details'>
 					<h3>CREDIT CART DETAILS</h3>
-					<form>
+					<form onSubmit={this.handleSubmit}>
 						<div className='checkout-form-upper'>
 							<div className='checkout-form-upper-1'>
 								<label>CARD HOLDER</label>
-								<input placeholder='Card Holder' type='text' />
+								<input
+									onChange={this.handleChange}
+									name='formCardName'
+									placeholder='Card Holder'
+									type='text'
+								/>
 							</div>
 							<div className='checkout-form-upper-2'>
 								<label>EXPIRATION DATE</label>
 								<div className='checkout-form-upper-2-inner'>
-									<input placeholder='MM' id='checkout-date-1' type='number' />
+									<input
+										onChange={this.handleChange}
+										name='formDate1'
+										placeholder='MM'
+										id='checkout-date-1'
+										type='number'
+									/>
 									<span> / </span>
-									<input placeholder='YY' id='checkout-date-2' type='number' />
+									<input
+										onChange={this.handleChange}
+										name='formDate2'
+										placeholder='YY'
+										id='checkout-date-2'
+										type='number'
+									/>
 								</div>
 							</div>
 						</div>
+						{console.log(this.state.formOk)}
 						<div className='checkout-form-below'>
 							<div className='checkout-form-below-1'>
 								<label>CARD NUMBER</label>
-								<input placeholder='Card Number' type='number' />
+								<input
+									onChange={this.handleChange}
+									name='formCardNumber'
+									placeholder='Card Number'
+									type='number'
+								/>
 							</div>
 							<div className='checkout-form-below-2'>
 								<label>CVC</label>
-								<input placeholder='CVC' type='number' />
+								<input
+									onChange={this.handleChange}
+									name='formCVC'
+									placeholder='CVC'
+									type='number'
+								/>
 							</div>
 						</div>
-						<button className='checkout-form-button'>PAY NOW</button>
+						<Link className='form-link' to={this.state.formOk && '/success'}>
+							<button
+								onClick={() =>
+									this.state.formOk && this.setState({ formOk: false })
+								}
+								type='submit'
+								className={
+									this.state.formOk
+										? 'checkout-form-button'
+										: 'checkout-form-button-disabled'
+								}
+							>
+								PAY NOW
+							</button>
+						</Link>
 					</form>
 				</div>
 			</div>

@@ -48,7 +48,6 @@ export default class MiniCart extends Component {
 	}
 
 	async componentDidMount() {
-		console.log(this.props.cartData);
 		const my_query = `{
 				product(id:"${this.props.cartData}"){
 				  id
@@ -88,6 +87,7 @@ export default class MiniCart extends Component {
 					<div className='miniCart-title'>
 						<div className='miniCart-top'>
 							<h3>
+								{console.log(this.state.cartItem)}
 								My Bag,
 								<span> {this.state.cartItem.length}</span>
 							</h3>
@@ -125,7 +125,7 @@ export default class MiniCart extends Component {
 							<div className='miniCart-bottom-payment'>
 								<Link
 									onClick={() => this.props.cartClick(false)}
-									to='cart'
+									to='/cart'
 									className='miniCart-link'
 								>
 									<p className='miniCart-bottom-payment-left'>VIEW BAG</p>

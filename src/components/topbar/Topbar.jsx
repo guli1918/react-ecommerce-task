@@ -93,6 +93,7 @@ export default class Topbar extends Component {
 	handleCurrencyType = (type) => {
 		this.setState({ currencyType: type });
 		this.setState({ currency: false });
+		this.props.sendCurrencyType(this.state.currencyType);
 	};
 
 	sendHandleCurrencyType = () => {
@@ -183,7 +184,7 @@ export default class Topbar extends Component {
 						<div className='currencyBar'>
 							{this.state.currency && (
 								<Currency
-									dataToCurrency={this.sendHandleCurrencyType}
+									dataToCurrency={this.handleCurrencyType}
 									currencyType={this.handleCurrencyType}
 								/>
 							)}
