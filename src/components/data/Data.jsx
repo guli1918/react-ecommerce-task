@@ -12,7 +12,6 @@ export default class data extends Component {
 			isLoading: true,
 			cartData: [],
 		};
-		this.handleHover = this.handleHover.bind(this);
 	}
 	handleHover = (id) => {
 		this.setState({ hover: id });

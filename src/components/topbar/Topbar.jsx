@@ -184,7 +184,7 @@ export default class Topbar extends Component {
 						<div className='currencyBar'>
 							{this.state.currency && (
 								<Currency
-									dataToCurrency={this.handleCurrencyType}
+									dataToCurrency={this.sendHandleCurrencyType}
 									currencyType={this.handleCurrencyType}
 								/>
 							)}
