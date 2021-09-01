@@ -8,14 +8,19 @@ export default class data extends Component {
 		super(props);
 		this.state = {
 			data: [],
-			hover: '',
-			click: false,
+			hover: null,
 			isLoading: true,
+			cartData: [],
 		};
 		this.handleHover = this.handleHover.bind(this);
 	}
 	handleHover = (id) => {
 		this.setState({ hover: id });
+	};
+
+	setCartData = (id) => {
+		this.setState({ cartData: id });
+		this.props.cartData(this.state.cartData);
 	};
 
 	async componentDidMount() {
@@ -87,7 +92,12 @@ export default class data extends Component {
 							</div>
 						</Link>
 						{this.state.hover === d.id && (
-							<div className='carts'>
+							<div
+								onClick={() => {
+									this.setCartData(d.id);
+								}}
+								className='carts'
+							>
 								<img className='shopping-cart' src='assets/cart.png' alt='' />
 							</div>
 						)}
@@ -119,7 +129,24 @@ export default class data extends Component {
 									</div>
 									<div className='product-desc'>
 										<h4>{d.name}</h4>
-										<p>${d.prices[0].amount}</p>
+
+										<p>
+											{this.props.currencyType ? (
+												<>
+													{d.prices[0].currency ===
+														this.props.currencyType &&
+														'$' + d.prices[0].amount}
+													{d.prices[1].currency ===
+														this.props.currencyType &&
+														'₤' + d.prices[1].amount}
+													{d.prices[3].currency ===
+														this.props.currencyType &&
+														'¥' + d.prices[3].amount}
+												</>
+											) : (
+												'$' + d.prices[0].amount
+											)}
+										</p>
 									</div>
 								</Link>
 								{this.state.hover === d.id && (

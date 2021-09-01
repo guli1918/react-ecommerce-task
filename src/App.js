@@ -14,28 +14,51 @@ class App extends Component {
 		super(props);
 		this.state = {
 			currencyType: null,
+			cartData: [],
 		};
 	}
 	handleCurrencyType = (type) => {
 		this.setState({ currencyType: type });
 	};
+	handleCartData = (data) => {
+		this.setState({ cartData: data });
+	};
 	render() {
 		return (
 			<div>
-				{console.log(this.state.currencyType)}
 				<Router>
-					<Topbar sendCurrencyType={this.handleCurrencyType} />
+					<Topbar
+						sendCartData={this.state.cartData}
+						sendCurrencyType={this.handleCurrencyType}
+					/>
 					<Switch>
 						<Route exact path='/'>
-							<Main currencyType={this.state.currencyType} category='all' />
+							<Main
+								cartData={this.handleCartData}
+								currencyType={this.state.currencyType}
+								category='all'
+							/>
 						</Route>
 						<Route path='/clothes'>
-							<Main category='clothes' />
+							<Main
+								cartData={this.handleCartData}
+								currencyType={this.state.currencyType}
+								category='clothes'
+							/>
 						</Route>
 						<Route path='/tech'>
-							<Main category='tech' />
+							<Main
+								cartData={this.handleCartData}
+								currencyType={this.state.currencyType}
+								category='tech'
+							/>
 						</Route>
-						<Route path='/product/:id' component={SingleProduct} />
+						<Route
+							path='/product/:id'
+							component={(props) => (
+								<SingleProduct currencyType={this.state.currencyType} {...props} />
+							)}
+						/>
 						<Route path='/checkout'>
 							<Checkout />
 						</Route>

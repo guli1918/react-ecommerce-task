@@ -38,8 +38,15 @@
 	width: 45rem;
 	height: 45rem;
 	object-fit: contain;
+	cursor: zoom-in;
+	transition: all 1s ease;
 }
 
+.main-img:focus,
+.main-img:hover {
+	-webkit-transform: scale(2);
+	transform: scale(1.2);
+}
 .secondary-img {
 	width: 7rem;
 	height: 7rem;

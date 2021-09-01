@@ -7,15 +7,24 @@ export default class main extends Component {
 		super(props);
 		this.state = {
 			name: 'Category Name',
+			cartData: [],
 		};
 	}
+	handleCartData = (data) => {
+		this.setState({ cartData: data });
+	};
+	sendCartData = () => {
+		this.props.cartData(this.state.cartData);
+	};
+
 	render() {
 		return (
-			<div className='main'>
+			<div onClick={this.sendCartData} className='main'>
 				<div className='main-wrapper'>
 					<h1 className='main-text'>{this.props.category.toUpperCase()}</h1>
 					<div className='products'>
 						<Data
+							cartData={this.handleCartData}
 							currencyType={this.props.currencyType}
 							category={this.props.category}
 						/>

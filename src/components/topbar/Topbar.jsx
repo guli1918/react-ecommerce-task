@@ -99,6 +99,10 @@ export default class Topbar extends Component {
 		this.props.sendCurrencyType(this.state.currencyType);
 	};
 
+	handleCartClick = (click) => {
+		this.setState({ cart: click });
+	};
+
 	render() {
 		return (
 			<div className='topbar'>
@@ -185,9 +189,16 @@ export default class Topbar extends Component {
 							)}
 						</div>
 						<div onClick={this.handleClickCart} className='imgRight'>
-							<img className='cart-topBar' src='assets/cart.png' alt='' />
+							<img className='cart-topBar' src='assets/cart-top.png' alt='' />
 						</div>
-						<div className='cartBar'>{this.state.cart && <MiniCart />}</div>
+						<div className='cartBar'>
+							{this.state.cart && (
+								<MiniCart
+									cartClick={this.handleCartClick}
+									cartData={this.props.sendCartData}
+								/>
+							)}
+						</div>
 					</div>
 				</div>
 			</div>

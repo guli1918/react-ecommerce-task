@@ -76,6 +76,8 @@ export default class SingleProduct extends Component {
 									alt=''
 								/>
 							)}
+							{console.log(this.state.imageDatax)}
+							{console.log(this.state.imageDatay)}
 						</div>
 						<div className='product-right'>
 							<div className='right-title'>
@@ -118,7 +120,21 @@ export default class SingleProduct extends Component {
 							<div className='right-price'>
 								<h3 className='right-price-text'>PRICE:</h3>
 								<h4 className='right-price-amount'>
-									${this.state.data.prices[0].amount}
+									{this.props.currencyType ? (
+										<>
+											{this.state.data.prices[0].currency ===
+												this.props.currencyType &&
+												'$' + this.state.data.prices[0].amount}
+											{this.state.data.prices[1].currency ===
+												this.props.currencyType &&
+												'₤' + this.state.data.prices[1].amount}
+											{this.state.data.prices[3].currency ===
+												this.props.currencyType &&
+												'¥' + this.state.data.prices[3].amount}
+										</>
+									) : (
+										'$' + this.state.data.prices[0].amount
+									)}
 								</h4>
 							</div>
 							<div className='add-to-cart'>
