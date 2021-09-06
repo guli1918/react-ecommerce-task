@@ -20,6 +20,7 @@ class SingleProduct extends Component {
 			  gallery
 			  description
 			  brand
+			  inStock
 			  prices{
 				currency
 				amount
@@ -165,9 +166,16 @@ class SingleProduct extends Component {
 									)}
 								</h4>
 							</div>
+							{console.log(product)}
 							<div
-								onClick={() => this.props.updateCardData(product)}
-								className='add-to-card'
+								onClick={() =>
+									product.inStock && this.props.updateCardData(product)
+								}
+								className={
+									product.inStock
+										? 'add-to-card'
+										: 'add-to-card add-to-card-disable'
+								}
 							>
 								<p>ADD TO CARD</p>
 							</div>

@@ -152,6 +152,14 @@
 	font-weight: 600;
 	background-color: #6dd388;
 }
+.add-to-card-disable {
+	cursor: not-allowed;
+	background-color: gray;
+}
+
+.add-to-card-disable:hover {
+	background-color: rgb(143, 141, 141);
+}
 
 .right-desc-text {
 	letter-spacing: 0.4px;

@@ -62,7 +62,8 @@ export default class MiniCard extends Component {
 																				.attributeValue
 																		].value
 															  )
-															: '?'}
+															: item.attributes[0].items[0]
+																	.displayValue}
 														{/* item.attributes[0].items[0]
 																	.displayValue */}
 													</p>
