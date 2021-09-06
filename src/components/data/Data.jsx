@@ -4,22 +4,13 @@ import Loader from 'react-loader-spinner';
 import './data.css';
 
 export default class data extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			data: [],
-			hover: null,
-			isLoading: true,
-			cartData: [],
-		};
-	}
-	handleHover = (id) => {
-		this.setState({ hover: id });
+	state = {
+		hover: null,
+		isLoading: true,
 	};
 
-	setCartData = (id) => {
-		this.setState({ cartData: id });
-		this.props.cartData(this.state.cartData);
+	handleHover = (id) => {
+		this.setState({ hover: id });
 	};
 
 	async componentDidMount() {
@@ -32,6 +23,13 @@ export default class data extends Component {
 				gallery
 				description
 				category
+				attributes {
+					name
+					id
+					items {
+					  displayValue
+					}
+				  }
 				prices {
 					currency
 					amount
@@ -47,13 +45,13 @@ export default class data extends Component {
 			body: JSON.stringify({ query: my_query }),
 		});
 		const data = await response.json();
-		this.setState({ data: data.data.category.products });
+		this.props.setProducts(data.data.category.products);
 		this.setState({ isLoading: false });
 	}
 	render() {
 		return !this.state.isLoading ? (
 			this.props.category === 'all' ? (
-				this.state.data.map((d, index) => (
+				this.props.products.map((d, index) => (
 					<div
 						id={d.id}
 						key={index}
@@ -93,17 +91,17 @@ export default class data extends Component {
 						{this.state.hover === d.id && (
 							<div
 								onClick={() => {
-									this.setCartData(d.id);
+									d.inStock && this.props.updateCardData(d);
 								}}
-								className='carts'
+								className={d.inStock ? 'cards ' : 'cards cards-disable'}
 							>
-								<img className='shopping-cart' src='assets/cart.png' alt='' />
+								<img className='shopping-card' src='assets/card.png' alt='' />
 							</div>
 						)}
 					</div>
 				))
 			) : (
-				this.state.data.map(
+				this.props.products.map(
 					(d, index) =>
 						this.props.category === d.category && (
 							<div
@@ -149,10 +147,15 @@ export default class data extends Component {
 									</div>
 								</Link>
 								{this.state.hover === d.id && (
-									<div className='carts'>
+									<div
+										onClick={() => {
+											d.inStock && this.props.updateCardData(d);
+										}}
+										className={d.inStock ? 'cards ' : 'cards cards-disable'}
+									>
 										<img
-											className='shopping-cart'
-											src='assets/cart.png'
+											className='shopping-card'
+											src='assets/card.png'
 											alt=''
 										/>
 									</div>

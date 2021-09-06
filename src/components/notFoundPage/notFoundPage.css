@@ -26,3 +26,22 @@
 .notFoundPage-text p {
 	margin-top: 2rem;
 }
+
+.notFoundPage-link {
+	text-decoration: none;
+	color: inherit;
+}
+
+.notFoundPage-link:hover {
+	color: gray;
+}
+
+.notFoundPage-link:active {
+	color: rgb(160, 158, 158);
+}
+
+@media screen and (max-width: 430px) {
+	.notFoundPage {
+		width: 130vw;
+	}
+}

@@ -1,23 +1,17 @@
 import React, { Component } from 'react';
 import './currency.css';
 export default class Currency extends Component {
-	constructor(props) {
-		super(props);
-		this.currencyUsd = this.currencyUsd.bind(this);
-		this.currencyGbp = this.currencyGbp.bind(this);
-		this.currencyJpy = this.currencyJpy.bind(this);
-	}
 	currencyUsd = () => {
-		this.props.currencyType('USD');
-		this.props.dataToCurrency();
+		this.props.updateCurrencyType('USD');
+		this.props.closeCurrencyBar(false);
 	};
 	currencyGbp = () => {
-		this.props.currencyType('GBP');
-		this.props.dataToCurrency();
+		this.props.updateCurrencyType('GBP');
+		this.props.closeCurrencyBar(false);
 	};
 	currencyJpy = () => {
-		this.props.currencyType('JPY');
-		this.props.dataToCurrency();
+		this.props.updateCurrencyType('JPY');
+		this.props.closeCurrencyBar(false);
 	};
 
 	render() {

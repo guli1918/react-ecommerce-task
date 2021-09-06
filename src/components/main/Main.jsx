@@ -2,31 +2,23 @@ import React, { Component } from 'react';
 import './main.css';
 import Data from '../data/Data';
 
-export default class main extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			name: 'Category Name',
-			cartData: [],
-		};
-	}
-	handleCartData = (data) => {
-		this.setState({ cartData: data });
-	};
-	sendCartData = () => {
-		this.props.cartData(this.state.cartData);
+export default class Main extends Component {
+	state = {
+		name: 'Category Name',
 	};
 
 	render() {
 		return (
-			<div onClick={this.sendCartData} className='main'>
+			<div className='main'>
+				<h1 className='main-text'>{this.props.category.toUpperCase()}</h1>
 				<div className='main-wrapper'>
-					<h1 className='main-text'>{this.props.category.toUpperCase()}</h1>
 					<div className='products'>
 						<Data
-							cartData={this.handleCartData}
+							updateCardData={this.props.updateCardData}
 							currencyType={this.props.currencyType}
 							category={this.props.category}
+							products={this.props.products}
+							setProducts={this.props.setProducts}
 						/>
 					</div>
 				</div>

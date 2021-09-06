@@ -1,16 +1,18 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router';
+
 import './singleProduct.css';
 
-export default class SingleProduct extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			image: 0,
-			size: null,
-			data: null,
-		};
-	}
+class SingleProduct extends Component {
+	state = {
+		image: 0,
+		size: null,
+		product: null,
+	};
+
 	async componentDidMount() {
+		const { history } = this.props;
+
 		const my_query = `{
 			product(id:"${this.props.match.params.id}"){
 			  id
@@ -38,8 +40,21 @@ export default class SingleProduct extends Component {
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({ query: my_query }),
 		});
-		const data = await response.json();
-		this.setState({ data: data.data.product });
+
+		if (response.status === 200) {
+			const { data } = await response.json();
+
+			if (data && data.product) {
+				this.setState({ product: data.product });
+			} else {
+				// Normally, we could check the response status to get users to 404 in case of not found product.
+				// However, the back-end returns 200 code for not found products, too.
+				history.push('/404');
+			}
+		} else {
+			// TODO: Show toast alert to user indicating that the product details could not be loaded properly.
+			console.error('An error occurred while fetcing product data.s');
+		}
 	}
 
 	imageClick(id) {
@@ -47,13 +62,15 @@ export default class SingleProduct extends Component {
 	}
 
 	render() {
+		const { product } = this.state;
+
 		return (
-			this.state.data && (
+			product && (
 				<div className='singleProduct'>
 					<div className='product-wrapper'>
 						<div className='product-left'>
-							{this.state.data.gallery.length > 0 &&
-								this.state.data.gallery.map((img, index) => (
+							{product.gallery.length > 0 &&
+								product.gallery.map((img, index) => (
 									<img
 										onClick={() => this.imageClick(index)}
 										className={
@@ -69,27 +86,27 @@ export default class SingleProduct extends Component {
 								))}
 						</div>
 						<div className='product-middle'>
-							{this.state.data.gallery && (
+							{product.gallery.length > 0 && (
 								<img
 									className='main-img'
-									src={this.state.data.gallery[this.state.image]}
+									src={product.gallery[this.state.image]}
 									alt=''
 								/>
 							)}
 						</div>
 						<div className='product-right'>
 							<div className='right-title'>
-								<h3 className='right-title-brand'>{this.state.data.brand}</h3>
-								<h3 className='right-title-name'>{this.state.data.name}</h3>
+								<h3 className='right-title-brand'>{product.brand}</h3>
+								<h3 className='right-title-name'>{product.name}</h3>
 							</div>
-							{this.state.data.attributes.length !== 0 &&
-								this.state.data.attributes.map((type, index) => (
+							{product.attributes.length > 0 &&
+								product.attributes.map((type, index) => (
 									<div key={index} className='right-size'>
 										<h4 className='right-size-text'>{type.name}</h4>
 										<div className='right-sizes'>
-											{this.state.data.attributes.length !== 0 &&
-											this.state.data.attributes[index].name === 'Color'
-												? this.state.data.attributes[index].items.map(
+											{product.attributes.length > 0 &&
+											product.attributes[index].name === 'Color'
+												? product.attributes[index].items.map(
 														(item, index) => (
 															<div
 																key={index}
@@ -105,10 +122,23 @@ export default class SingleProduct extends Component {
 															></div>
 														)
 												  )
-												: this.state.data.attributes[index].items.map(
+												: product.attributes[index].items.map(
 														(item, index) => (
-															<div key={index} className='size-box'>
-																{item.displayValue}
+															<div
+																key={index}
+																onClick={() =>
+																	this.props.updateAttributeValue(
+																		index
+																	)
+																}
+																className={
+																	index ===
+																	this.props.attributeValue
+																		? 'size-box size-box-active'
+																		: 'size-box'
+																}
+															>
+																{item.value}
 															</div>
 														)
 												  )}
@@ -120,29 +150,32 @@ export default class SingleProduct extends Component {
 								<h4 className='right-price-amount'>
 									{this.props.currencyType ? (
 										<>
-											{this.state.data.prices[0].currency ===
+											{product.prices[0].currency ===
 												this.props.currencyType &&
-												'$' + this.state.data.prices[0].amount}
-											{this.state.data.prices[1].currency ===
+												'$' + product.prices[0].amount}
+											{product.prices[1].currency ===
 												this.props.currencyType &&
-												'₤' + this.state.data.prices[1].amount}
-											{this.state.data.prices[3].currency ===
+												'₤' + product.prices[1].amount}
+											{product.prices[3].currency ===
 												this.props.currencyType &&
-												'¥' + this.state.data.prices[3].amount}
+												'¥' + product.prices[3].amount}
 										</>
 									) : (
-										'$' + this.state.data.prices[0].amount
+										'$' + product.prices[0].amount
 									)}
 								</h4>
 							</div>
-							<div className='add-to-cart'>
-								<p>ADD TO CART</p>
+							<div
+								onClick={() => this.props.updateCardData(product)}
+								className='add-to-card'
+							>
+								<p>ADD TO CARD</p>
 							</div>
 							<div className='right-desc'>
 								<p
 									className='right-desc-text'
 									dangerouslySetInnerHTML={{
-										__html: this.state.data.description,
+										__html: this.state.product.description,
 									}}
 								/>
 							</div>
@@ -153,3 +186,5 @@ export default class SingleProduct extends Component {
 		);
 	}
 }
+
+export default withRouter(SingleProduct);

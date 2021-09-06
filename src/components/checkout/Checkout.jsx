@@ -3,121 +3,156 @@ import { Link } from 'react-router-dom';
 import './checkout.css';
 
 export default class Checkout extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			formOk: false,
-		};
-		this.handleSubmit = this.handleSubmit.bind(this);
-	}
-	handleChange = (e) => {
-		const name = e.target.name;
-		this.setState({
-			[name]: e.target.value,
-		});
-		const form = this.state;
-
-		form.formCardName &&
-			form.formCardNumber &&
-			form.formDate1 &&
-			form.formDate2 &&
-			form.formCVC &&
-			this.setState({ formOk: true });
+	state = {
+		formCardName: '',
+		formCardNumber: '',
+		formDate1: '',
+		formDate2: '',
+		formCVC: '',
 	};
 
-	handleSubmit(e) {
+	handleSubmit = (e) => {
 		e.preventDefault();
-	}
+	};
+
+	checkSuccessState = () => {
+		this.props.checkSuccessState(true);
+	};
 	render() {
 		return (
 			<div className='checkout'>
 				<h3 className='checkout-title'>CHECKOUT</h3>
-				<div className='checkout-products'>
-					<div className='checkout-product'>
-						<div className='checkout-product-left'>
-							<h3>Product 1</h3>
-							<p>Lorem ipsum dolor sit amet.</p>
-						</div>
-						<div className='checkout-product-right'>
-							<p>$50.00</p>
+				{this.props.cardData.map((item) => (
+					<div className='checkout-products'>
+						<div className='checkout-product'>
+							<div className='checkout-product-left'>
+								<h3>
+									{item.name} <span> x{item.qty}</span>
+								</h3>
+								<p
+									dangerouslySetInnerHTML={{
+										__html: item.description,
+									}}
+								/>
+							</div>
+							<div className='checkout-product-right'>
+								<p>
+									{item.prices.map(
+										(price) =>
+											price.currency === this.props.currencyType &&
+											(price.currency === 'USD'
+												? '$' + price.amount * item.qty
+												: price.currency === 'GBP'
+												? '£' + price.amount * item.qty
+												: '¥' + price.amount * item.qty)
+									)}
+								</p>
+							</div>
 						</div>
 					</div>
-					<span></span>
-				</div>
+				))}
 				<div className='checkout-price'>
 					<h3>TOTAL</h3>
-					<p>$100.00</p>
+					<p>
+						{this.props.currencyType === 'USD'
+							? '$'
+							: this.props.currencyType === 'GBP'
+							? '£'
+							: '¥'}
+						{this.props.totalPrice}
+					</p>
 				</div>
 				<div className='checkout-details'>
-					<h3>CREDIT CART DETAILS</h3>
+					<h3>CREDIT CARD DETAILS</h3>
 					<form onSubmit={this.handleSubmit}>
 						<div className='checkout-form-upper'>
 							<div className='checkout-form-upper-1'>
 								<label>CARD HOLDER</label>
 								<input
-									onChange={this.handleChange}
+									onChange={(e) =>
+										this.setState({ formCardName: e.target.value })
+									}
 									name='formCardName'
 									placeholder='Card Holder'
 									type='text'
+									value={this.state.formCardName}
+									required
 								/>
 							</div>
 							<div className='checkout-form-upper-2'>
 								<label>EXPIRATION DATE</label>
 								<div className='checkout-form-upper-2-inner'>
 									<input
-										onChange={this.handleChange}
+										onChange={(e) =>
+											this.setState({ formDate1: e.target.value })
+										}
 										name='formDate1'
 										placeholder='MM'
 										id='checkout-date-1'
 										type='number'
+										value={this.state.formDate1}
+										required
 									/>
 									<span> / </span>
 									<input
-										onChange={this.handleChange}
+										onChange={(e) =>
+											this.setState({ formDate2: e.target.value })
+										}
 										name='formDate2'
 										placeholder='YY'
 										id='checkout-date-2'
 										type='number'
+										value={this.state.formDate2}
+										required
 									/>
 								</div>
 							</div>
 						</div>
-						{console.log(this.state.formOk)}
 						<div className='checkout-form-below'>
 							<div className='checkout-form-below-1'>
 								<label>CARD NUMBER</label>
 								<input
-									onChange={this.handleChange}
+									onChange={(e) =>
+										this.setState({ formCardNumber: e.target.value })
+									}
 									name='formCardNumber'
 									placeholder='Card Number'
 									type='number'
+									value={this.state.formCardNumber}
+									required
 								/>
 							</div>
 							<div className='checkout-form-below-2'>
 								<label>CVC</label>
 								<input
-									onChange={this.handleChange}
+									onChange={(e) => this.setState({ formCVC: e.target.value })}
 									name='formCVC'
 									placeholder='CVC'
 									type='number'
+									value={this.state.formCVC}
+									required
 								/>
 							</div>
 						</div>
-						<Link className='form-link' to={this.state.formOk && '/success'}>
-							<button
-								onClick={() =>
-									this.state.formOk && this.setState({ formOk: false })
-								}
-								type='submit'
-								className={
-									this.state.formOk
-										? 'checkout-form-button'
-										: 'checkout-form-button-disabled'
-								}
+						{this.state.formCardName &&
+						this.state.formCardNumber &&
+						this.state.formDate1 &&
+						this.state.formDate2 &&
+						this.state.formCVC ? (
+							<Link
+								onClick={this.checkSuccessState}
+								className='form-link'
+								to='/success'
 							>
+								<button type='submit' className='checkout-form-button'>
+									PAY NOW
+								</button>
+							</Link>
+						) : (
+							<button type='submit' className='checkout-form-button-disabled'>
 								PAY NOW
 							</button>
-						</Link>
+						)}
 					</form>
 				</div>
 			</div>

@@ -12,7 +12,7 @@
 
 .main-text {
 	font-weight: 400;
-	padding: 1rem 0 2.5rem;
+	padding: 1rem 0 0 6rem;
 	margin-left: 1rem;
 }
 
@@ -89,7 +89,7 @@
 	align-items: center;
 }
 
-.carts {
+.cards {
 	position: relative;
 	bottom: 4.4rem;
 	left: 20.5rem;
@@ -103,14 +103,43 @@
 	cursor: pointer;
 }
 
-.shopping-cart {
+.shopping-card {
 	width: 20px;
 }
 
-.carts:hover {
+.cards:hover {
 	background-color: #7cd393;
 }
 
-.carts:active {
+.cards:active {
 	background-color: #5aa86f;
+}
+
+@media screen and (max-width: 430px) {
+	.main {
+		position: relative;
+		top: 70px;
+	}
+	.product {
+		width: 20rem;
+		height: 20rem;
+	}
+
+	.main-wrapper {
+		width: 100vw;
+		max-width: 110%;
+		display: flex;
+		justify-content: flex-start;
+		flex-direction: column;
+	}
+
+	.products {
+		width: 100%;
+		display: flex;
+		justify-content: flex-start;
+		flex-direction: column;
+	}
+	.img {
+		height: 100%;
+	}
 }

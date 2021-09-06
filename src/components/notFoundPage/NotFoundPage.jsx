@@ -12,7 +12,7 @@ export default class NotFoundPage extends Component {
 					<p className='notFoundPage-text-1'>
 						Woops. Looks like this page doesn't exist.
 					</p>
-					<Link className='link' to='/'>
+					<Link className='notFoundPage-link' to='/'>
 						<p>↻ Go to Homepage</p>
 					</Link>
 				</div>

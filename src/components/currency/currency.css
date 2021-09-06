@@ -23,3 +23,9 @@
 .currency ul li:active {
 	color: #43aa5e;
 }
+
+@media screen and (max-width: 430px) {
+	.currency {
+		right: -2.5rem;
+	}
+}
