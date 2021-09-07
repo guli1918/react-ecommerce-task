@@ -140,6 +140,7 @@
 
 .miniCard-bottom-payment-left {
 	border: 1px solid black;
+	font-weight: 500;
 }
 
 .miniCard-bottom-payment-left:hover {
@@ -151,12 +152,13 @@
 	color: white;
 	background-color: #43aa5e;
 	border: 1px solid #43aa5e;
+	font-weight: 600;
 }
 
 .miniCard-bottom-payment-right:hover {
 	background-color: #78da90;
 	border: 1px solid #78da90;
-	font-weight: 800;
+	font-weight: 700;
 }
 
 .miniCard-link {

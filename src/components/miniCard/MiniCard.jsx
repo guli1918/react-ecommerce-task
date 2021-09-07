@@ -41,7 +41,7 @@ export default class MiniCard extends Component {
 											{
 												<div className='miniCard-left-attribute'>
 													<p>
-														{this.props.attributeValue
+														{/* {this.props.attributeValue
 															? item.attributes.map(
 																	(attribute) =>
 																		attribute.items &&
@@ -50,11 +50,25 @@ export default class MiniCard extends Component {
 																				.attributeValue
 																		].displayValue
 															  )
-															: this.props.attributeValue
-															? item.attributes[0].items[0].displayValue.slice(
-																	0,
-																	4
-															  )
+															: item.attributes
+															? item.attributes[0].items[0]
+																	.displayValue
+															: 'DFLT'} */}
+														{this.props.attributeValue
+															? item.attributes.length > 0
+																? item.attributes.map((attribute) =>
+																		attribute.items[
+																			this.props
+																				.attributeValue
+																		]
+																			? attribute.items[
+																					this.props
+																						.attributeValue
+																			  ].displayValue
+																			: attribute.items[0]
+																					.displayValue
+																  )
+																: 'none'
 															: 'DFLT'}
 													</p>
 												</div>

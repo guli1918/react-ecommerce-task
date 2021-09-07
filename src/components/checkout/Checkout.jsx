@@ -23,7 +23,7 @@ export default class Checkout extends Component {
 			<div className='checkout'>
 				<h3 className='checkout-title'>CHECKOUT</h3>
 				{this.props.cardData.map((item) => (
-					<div className='checkout-products'>
+					<div key={item.id} className='checkout-products'>
 						<div className='checkout-product'>
 							<div className='checkout-product-left'>
 								<h3>

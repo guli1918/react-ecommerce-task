@@ -37,10 +37,17 @@ export default class Card extends Component {
 								</div>
 								<div className='card-product-left-attributes'>
 									<div className='card-product-left-attribute'>
-										{this.props.attributeValue &&
-											item.attributes &&
-											item.attributes[0].items[this.props.attributeValue]
-												.displayValue}
+										{this.props.attributeValue
+											? item.attributes.length > 0
+												? item.attributes.map((attribute) =>
+														attribute.items[this.props.attributeValue]
+															? attribute.items[
+																	this.props.attributeValue
+															  ].displayValue
+															: attribute.items[0].displayValue
+												  )
+												: 'none'
+											: 'DFLT'}
 									</div>
 								</div>
 							</div>
