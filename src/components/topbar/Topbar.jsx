@@ -18,19 +18,16 @@ export default class Topbar extends Component {
 		this.setState({ currency: !this.state.currency });
 		this.setState({ card: false });
 	};
-	handleClickCard = () => {
+	handleClickCard = (state) => {
+		state = false;
 		this.setState({ card: !this.state.card });
 		this.setState({ currency: false });
 	};
+
 	handleCurrencyType = (type) => {
 		this.setState({ currencyType: type });
 		this.setState({ currency: false });
-		// this.props.sendCurrencyType(this.state.currencyType);
 	};
-
-	// updateCurrencyType = () => {
-	// 	this.props.updateCurrencyType(this.state.currencyType);
-	// };
 
 	handleCardClick = (click) => {
 		this.setState({ card: click });

@@ -6,22 +6,9 @@ import './miniCard.css';
 export default class MiniCard extends Component {
 	state = {
 		isLoading: false,
-		// totalPrice: 0,
 	};
 
-	// getTotalPrice = () => {
-	// 	const { cardData } = this.props;
-
-	// 	return cardData.reduce((a, c) => {
-	// 		const price = c.prices.find((p) => p.currency === this.props.currencyType);
-
-	// 		return a + price.amount * c.qty;
-	// 	}, 0);
-	// };
-
 	render() {
-		// const totalPrice = this.getTotalPrice();
-
 		return (
 			!this.state.isLoading && (
 				<div className='miniCard-main'>
@@ -57,15 +44,18 @@ export default class MiniCard extends Component {
 														{this.props.attributeValue
 															? item.attributes.map(
 																	(attribute) =>
+																		attribute.items &&
 																		attribute.items[
 																			this.props
 																				.attributeValue
-																		].value
+																		].displayValue
 															  )
-															: item.attributes[0].items[0]
-																	.displayValue}
-														{/* item.attributes[0].items[0]
-																	.displayValue */}
+															: this.props.attributeValue
+															? item.attributes[0].items[0].displayValue.slice(
+																	0,
+																	4
+															  )
+															: 'DFLT'}
 													</p>
 												</div>
 											}
@@ -78,7 +68,15 @@ export default class MiniCard extends Component {
 											</p>
 										</div>
 										<div className='miniCard-right'>
-											<img src={item.gallery[0]} alt='' />
+											<>
+												<Link to={`/product/${item.id}`}>
+													<img
+														className='miniCard-right-main'
+														src={item.gallery[item.displayImg]}
+														alt=''
+													/>
+												</Link>
+											</>
 										</div>
 									</div>
 								)

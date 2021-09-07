@@ -41,10 +41,10 @@ export default class Checkout extends Component {
 										(price) =>
 											price.currency === this.props.currencyType &&
 											(price.currency === 'USD'
-												? '$' + price.amount * item.qty
+												? '$' + price.amount.toFixed(2) * item.qty
 												: price.currency === 'GBP'
-												? '£' + price.amount * item.qty
-												: '¥' + price.amount * item.qty)
+												? '£' + price.amount.toFixed(2) * item.qty
+												: '¥' + price.amount.toFixed(2) * item.qty)
 									)}
 								</p>
 							</div>
@@ -59,7 +59,7 @@ export default class Checkout extends Component {
 							: this.props.currencyType === 'GBP'
 							? '£'
 							: '¥'}
-						{this.props.totalPrice}
+						{this.props.totalPrice.toFixed(2)}
 					</p>
 				</div>
 				<div className='checkout-details'>

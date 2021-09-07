@@ -54,7 +54,56 @@ class SingleProduct extends Component {
 			}
 		} else {
 			// TODO: Show toast alert to user indicating that the product details could not be loaded properly.
-			console.error('An error occurred while fetcing product data.s');
+			console.error('An error occurred while fetcing product data.');
+		}
+	}
+
+	async componentDidUpdate() {
+		const { history, location } = this.props;
+		if (this.state.product.id !== location.pathname.split('/')[2]) {
+			const my_query = `{
+				product(id:"${this.props.match.params.id}"){
+				  id
+				  name
+				  gallery
+				  description
+				  brand
+				  inStock
+				  prices{
+					currency
+					amount
+				  }
+				  attributes{
+					  name
+					items {
+					  displayValue
+					  id
+					  value
+					}
+				  }
+				}
+			  }`;
+			const url = 'http://localhost:4000/';
+			const response = await fetch(url, {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({ query: my_query }),
+			});
+
+			if (response.status === 200) {
+				const { data } = await response.json();
+
+				if (data && data.product) {
+					this.setState({ product: data.product });
+				} else {
+					// Normally, we could check the response status to get users to 404 in case of not found product.
+					// However, the back-end returns 200 code for not found products, too.
+					history.push('/404');
+				}
+			} else {
+				// TODO: Show toast alert to user indicating that the product details could not be loaded properly.
+				console.error('An error occurred while fetcing product data.');
+			}
 		}
 	}
 
@@ -166,7 +215,6 @@ class SingleProduct extends Component {
 									)}
 								</h4>
 							</div>
-							{console.log(product)}
 							<div
 								onClick={() =>
 									product.inStock && this.props.updateCardData(product)

@@ -19,10 +19,29 @@ class App extends Component {
 		attributeValue: null,
 		totalPrice: 0,
 		successState: false,
+		cardClick: false,
 	};
 
 	updateCurrencyType = (currencyType) => {
 		this.setState({ currencyType });
+	};
+
+	displayNextImg = (item) => {
+		const { cardData } = this.state;
+
+		if (item.gallery.length - 1 > item.displayImg) {
+			item.displayImg = item.displayImg + 1;
+		}
+
+		this.setState({ cardData });
+	};
+
+	displayPreviousImg = (item) => {
+		const { cardData } = this.state;
+		if (item.displayImg !== 0) {
+			item.displayImg = item.displayImg - 1;
+		}
+		this.setState({ cardData });
 	};
 
 	updateCardData = (data) => {
@@ -35,6 +54,7 @@ class App extends Component {
 			cardData.push({
 				...data,
 				qty: 1,
+				displayImg: 0,
 			});
 		}
 
@@ -71,6 +91,7 @@ class App extends Component {
 	checkSuccessState = (state) => {
 		this.setState({ successState: state });
 	};
+
 	render() {
 		const totalPrice = this.getTotalPrice();
 		return (
@@ -126,12 +147,16 @@ class App extends Component {
 					/>
 					<Route path='/card'>
 						<Card
+							updateCardData={this.updateCardData}
+							decreaseCardData={this.decreaseCardData}
 							attributeValue={this.state.attributeValue}
 							cardData={this.state.cardData}
+							currencyType={this.state.currencyType}
+							displayNextImg={this.displayNextImg}
+							displayPreviousImg={this.displayPreviousImg}
 						/>
 					</Route>
 					<Route path='/checkout'>
-						{console.log(this.state.successState)}
 						<Checkout
 							cardData={this.state.cardData}
 							currencyType={this.state.currencyType}

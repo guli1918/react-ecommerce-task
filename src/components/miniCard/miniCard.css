@@ -45,15 +45,16 @@
 }
 
 .miniCard-left-attribute {
-	font-size: 12px;
+	font-size: 8px;
 	margin-top: 10px;
-	width: 24px;
+	width: 32px;
 	min-height: 24px;
 	border: 1px solid #1d1f22;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	cursor: pointer;
+	text-align: center;
 }
 
 .miniCard-middle {
@@ -74,6 +75,22 @@
 	cursor: pointer;
 }
 
+.miniCard-middle p:hover {
+	font-weight: 500;
+	background-color: rgb(241, 240, 240);
+}
+
+.miniCard-middle:active {
+	font-weight: 600;
+}
+
+.miniCard-middle p:hover {
+	font-weight: 500;
+}
+
+.miniCard-middle p:active {
+	font-weight: 600;
+}
 .miniCard-middle h3 {
 	width: 24px;
 	height: 24px;
@@ -85,12 +102,11 @@
 .miniCard-right {
 	display: flex;
 	flex: 4;
-	display: flex;
 	justify-content: flex-end;
 	align-items: center;
 }
 
-.miniCard-right img {
+.miniCard-right-main {
 	width: 105px;
 	height: 142px;
 	object-fit: contain;

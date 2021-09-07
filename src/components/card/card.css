@@ -56,6 +56,7 @@
 	justify-content: center;
 	align-items: center;
 	cursor: pointer;
+	text-align: center;
 }
 
 .card-product-middle {
@@ -98,14 +99,41 @@
 
 .card-product-right {
 	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
 	flex: 1;
 	margin-left: 12px;
+	position: relative;
 }
 
-.card-product-right img {
+.card-right-main {
 	width: 100%;
 	height: 100%;
 	object-fit: contain;
+}
+
+.car-product-inner {
+	position: absolute;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.card-right-arrows {
+	width: 14px;
+	height: 14px;
+	position: relative;
+	border-radius: 50%;
+	opacity: 0.6;
+}
+
+.card-right-arrows:hover {
+	opacity: 1;
+}
+
+.arrow-right {
+	margin-left: 135px;
 }
 
 .card-bottom {
