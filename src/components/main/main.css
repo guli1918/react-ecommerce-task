@@ -3,6 +3,12 @@
 	top: 70px;
 }
 
+.main-noFocus {
+	position: absolute;
+	top: 70px;
+	background-color: rgba(57, 55, 72, 0.22);
+}
+
 .main-wrapper {
 	padding: 0.5rem 5rem;
 	width: calc(100vw - 177px);
@@ -31,6 +37,14 @@
 	cursor: pointer;
 }
 
+.product-noFocus {
+	width: 30rem;
+	height: 30rem;
+	margin: 2rem 1.5rem;
+	background-color: white;
+	cursor: pointer;
+	opacity: 0.5;
+}
 .noStock {
 	opacity: 0.5;
 }
@@ -126,7 +140,7 @@
 	}
 
 	.main-wrapper {
-		width: 100vw;
+		/* width: 100vw; */
 		max-width: 110%;
 		display: flex;
 		justify-content: flex-start;

@@ -42,10 +42,16 @@
 	font-size: 30px;
 }
 
+.card-product-left-link {
+	color: inherit;
+	text-decoration: none;
+}
+
 .card-product-left-price {
 	margin: 24px 0;
 	font-weight: 700;
 	font-size: 24px;
+	width: 50px;
 }
 
 .card-product-left-attribute {
@@ -113,7 +119,7 @@
 	object-fit: contain;
 }
 
-.car-product-inner {
+.card-product-inner {
 	position: absolute;
 	display: flex;
 	justify-content: center;
@@ -126,6 +132,7 @@
 	position: relative;
 	border-radius: 50%;
 	opacity: 0.6;
+	cursor: pointer;
 }
 
 .card-right-arrows:hover {
@@ -133,7 +140,10 @@
 }
 
 .arrow-right {
-	margin-left: 135px;
+	margin-left: 112px;
+}
+.arrow-left {
+	position: relative;
 }
 
 .card-bottom {
@@ -214,13 +224,14 @@
 		flex: 1;
 	}
 
-	.card-product-right {
+	/* .card-product-right {
 		align-items: flex-start;
 		justify-content: flex-end;
-	}
+	} */
+
 	.card-product-right img {
-		width: 213px;
-		height: 213px;
+		width: 203px;
+		height: 203px;
 		object-fit: contain;
 		flex: 5;
 	}

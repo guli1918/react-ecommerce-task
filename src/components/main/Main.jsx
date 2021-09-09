@@ -8,17 +8,20 @@ export default class Main extends Component {
 	};
 
 	render() {
+		const { updateCardData, currencyType, category, products, setProducts, card } = this.props;
+
 		return (
-			<div className='main'>
+			<div className={this.props.card ? 'main-noFocus' : 'main'}>
 				<h1 className='main-text'>{this.props.category.toUpperCase()}</h1>
 				<div className='main-wrapper'>
 					<div className='products'>
 						<Data
-							updateCardData={this.props.updateCardData}
-							currencyType={this.props.currencyType}
-							category={this.props.category}
-							products={this.props.products}
-							setProducts={this.props.setProducts}
+							updateCardData={updateCardData}
+							currencyType={currencyType}
+							category={category}
+							products={products}
+							setProducts={setProducts}
+							card={card}
 						/>
 					</div>
 				</div>

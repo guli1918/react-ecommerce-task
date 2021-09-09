@@ -1,19 +1,29 @@
 .currency {
-	width: 6rem;
-	height: 10rem;
+	width: 5rem;
+	height: 13rem;
 	position: absolute;
 	top: 80px;
 	right: 6.5rem;
 	z-index: 3;
 	background-color: white;
+	-webkit-box-shadow: 0px 5px 13px 3px #e3e3e3;
+	box-shadow: 0px 5px 13px 3px #e3e3e3;
+}
+.currency ul {
+	width: 58%;
+	height: 100%;
+	position: relative;
+	right: 23px;
+	bottom: 5px;
 }
 
 .currency ul li {
 	margin: 1.5rem 0;
-	font-size: 0.8rem;
+	font-size: 0.85rem;
 	font-weight: 500;
 	list-style: none;
 	cursor: pointer;
+	color: black;
 }
 
 .currency ul li:hover {

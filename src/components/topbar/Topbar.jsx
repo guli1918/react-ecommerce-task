@@ -7,21 +7,21 @@ import MiniCard from '../miniCard/MiniCard';
 
 export default class Topbar extends Component {
 	state = {
-		currency: false,
-		card: false,
 		activePage: null,
 		location1: null,
 		location2: null,
 	};
 
 	handleClickCurrency = () => {
-		this.setState({ currency: !this.state.currency });
-		this.setState({ card: false });
+		this.props.handleClickCurrency(!this.props.currency);
 	};
-	handleClickCard = (state) => {
-		state = false;
-		this.setState({ card: !this.state.card });
-		this.setState({ currency: false });
+	handleClickCard = () => {
+		this.props.handleClickCard(!this.props.card);
+	};
+
+	handleClickOverlays = () => {
+		this.props.handleClickCard(false);
+		this.props.handleClickCurrency(false);
 	};
 
 	handleCurrencyType = (type) => {
@@ -29,14 +29,32 @@ export default class Topbar extends Component {
 		this.setState({ currency: false });
 	};
 
-	handleCardClick = (click) => {
-		this.setState({ card: click });
+	handleCardClick = () => {
+		this.props.handleClickCard(false);
+		this.props.handleClickCurrency(false);
 	};
 	handleCurrencyClick = (click) => {
 		this.setState({ currency: click });
 	};
 
 	render() {
+		const { activePage } = this.state;
+		const {
+			handleClickCard,
+			handleClickCurrency,
+			currencyType,
+			updateCurrencyType,
+			cardData,
+			existingProduct,
+			updateCardData,
+			decreaseCardData,
+			attributeValue,
+			totalPrice,
+			card,
+			currency,
+		} = this.props;
+
+		const itemQuantity = this.props.cardData.reduce((a, item) => a + item.qty, 0);
 		return (
 			<div className='topbar'>
 				<div className='wrapper'>
@@ -47,12 +65,10 @@ export default class Topbar extends Component {
 									key='1'
 									onClick={() => {
 										this.setState({ activePage: 1 });
-										this.setState({ card: false });
-										this.setState({ currency: false });
+										handleClickCard(false);
+										handleClickCurrency(false);
 									}}
-									className={
-										this.state.activePage === 1 ? 'link link-active' : 'link'
-									}
+									className={activePage === 1 ? 'link link-active' : 'link'}
 									to='/'
 								>
 									ALL
@@ -62,12 +78,10 @@ export default class Topbar extends Component {
 								<Link
 									onClick={() => {
 										this.setState({ activePage: 2 });
-										this.setState({ card: false });
-										this.setState({ currency: false });
+										handleClickCard(false);
+										handleClickCurrency(false);
 									}}
-									className={
-										this.state.activePage === 2 ? 'link link-active' : 'link'
-									}
+									className={activePage === 2 ? 'link link-active' : 'link'}
 									to='/clothes'
 								>
 									CLOTHES
@@ -77,12 +91,10 @@ export default class Topbar extends Component {
 								<Link
 									onClick={() => {
 										this.setState({ activePage: 3 });
-										this.setState({ card: false });
-										this.setState({ currency: false });
+										handleClickCard(false);
+										handleClickCurrency(false);
 									}}
-									className={
-										this.state.activePage === 3 ? 'link link-active' : 'link'
-									}
+									className={activePage === 3 ? 'link link-active' : 'link'}
 									to='/tech'
 								>
 									TECH
@@ -90,52 +102,60 @@ export default class Topbar extends Component {
 							</li>
 						</ul>
 					</div>
+					<div onClick={this.handleClickOverlays} className='topBar-middle'></div>
 					<div className='topBar-right'>
-						<div></div>
 						<div onClick={this.handleClickCurrency} className='imgLeft'>
 							<p className='imgLeft-currency'>
-								{this.props.currencyType === 'USD'
+								{currencyType === 'USD'
 									? '$'
-									: this.props.currencyType === 'GBP'
+									: currencyType === 'GBP'
 									? '£'
-									: '¥'}
+									: currencyType === 'AUD'
+									? 'A$'
+									: currencyType === 'JPY'
+									? '¥'
+									: '₽'}
 							</p>
 							<img
-								className={this.state.currency ? 'down rotateDollar' : 'down'}
+								className={currency ? 'down rotateDollar' : 'down'}
 								src='../assets/down.png'
 								alt=''
 							/>
 						</div>
 						<div className='currencyBar'>
-							{this.state.currency && (
+							{currency && (
 								<Currency
 									closeCurrencyBar={this.handleCurrencyClick}
-									updateCurrencyType={this.props.updateCurrencyType}
+									updateCurrencyType={updateCurrencyType}
+									handleClickCurrency={handleClickCurrency}
 								/>
 							)}
 						</div>
 						<div onClick={this.handleClickCard} className='imgRight'>
 							<img className='card-topBar' src='../assets/card-top.png' alt='' />
-							{this.props.cardData.length > 0 && (
-								<div className='card-topBar-circle'>
-									{this.props.cardData.length}
-								</div>
-							)}
+							{itemQuantity > 0 ? (
+								itemQuantity <= 99 ? (
+									<div className='card-topBar-circle'>{itemQuantity}</div>
+								) : (
+									<div className='card-topBar-circle-small'>99+</div>
+								)
+							) : null}
 						</div>
 						<div className='cardBar'>
-							{this.state.card && (
+							{card && (
 								<MiniCard
 									cardClick={this.handleCardClick}
-									cardData={this.props.cardData}
-									existingProduct={this.props.existingProduct}
-									updateCardData={this.props.updateCardData}
-									decreaseCardData={this.props.decreaseCardData}
-									currencyType={this.props.currencyType}
-									attributeValue={this.props.attributeValue}
-									totalPrice={this.props.totalPrice}
+									cardData={cardData}
+									existingProduct={existingProduct}
+									updateCardData={updateCardData}
+									decreaseCardData={decreaseCardData}
+									currencyType={currencyType}
+									attributeValue={attributeValue}
+									totalPrice={totalPrice}
 								/>
 							)}
 						</div>
+						<div onClick={this.handleClickOverlays} className='topBar-right-part'></div>
 					</div>
 				</div>
 			</div>

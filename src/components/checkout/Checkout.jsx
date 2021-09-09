@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import parse from 'html-react-parser';
+
 import './checkout.css';
 
 export default class Checkout extends Component {
@@ -19,32 +21,35 @@ export default class Checkout extends Component {
 		this.props.checkSuccessState(true);
 	};
 	render() {
+		const { cardData, currencyType, totalPrice } = this.props;
+		const { formCardName, formCardNumber, formDate1, formDate2, formCVC } = this.state;
+
 		return (
 			<div className='checkout'>
 				<h3 className='checkout-title'>CHECKOUT</h3>
-				{this.props.cardData.map((item) => (
+				{cardData.map((item) => (
 					<div key={item.id} className='checkout-products'>
 						<div className='checkout-product'>
 							<div className='checkout-product-left'>
 								<h3>
 									{item.name} <span> x{item.qty}</span>
 								</h3>
-								<p
-									dangerouslySetInnerHTML={{
-										__html: item.description,
-									}}
-								/>
+								{parse(item.description)}
 							</div>
 							<div className='checkout-product-right'>
 								<p>
 									{item.prices.map(
 										(price) =>
-											price.currency === this.props.currencyType &&
+											price.currency === currencyType &&
 											(price.currency === 'USD'
 												? '$' + price.amount.toFixed(2) * item.qty
 												: price.currency === 'GBP'
 												? '£' + price.amount.toFixed(2) * item.qty
-												: '¥' + price.amount.toFixed(2) * item.qty)
+												: price.currency === 'AUD'
+												? 'A$' + price.amount.toFixed(2) * item.qty
+												: price.currency === 'JPY'
+												? '¥' + price.amount.toFixed(2) * item.qty
+												: '₽' + price.amount.toFixed(2) * item.qty)
 									)}
 								</p>
 							</div>
@@ -54,12 +59,16 @@ export default class Checkout extends Component {
 				<div className='checkout-price'>
 					<h3>TOTAL</h3>
 					<p>
-						{this.props.currencyType === 'USD'
+						{currencyType === 'USD'
 							? '$'
-							: this.props.currencyType === 'GBP'
+							: currencyType === 'GBP'
 							? '£'
-							: '¥'}
-						{this.props.totalPrice.toFixed(2)}
+							: currencyType === 'AUD'
+							? '¥'
+							: currencyType === 'JPY'
+							? '¥'
+							: '₽'}
+						{totalPrice.toFixed(2)}
 					</p>
 				</div>
 				<div className='checkout-details'>
@@ -75,7 +84,7 @@ export default class Checkout extends Component {
 									name='formCardName'
 									placeholder='Card Holder'
 									type='text'
-									value={this.state.formCardName}
+									value={formCardName}
 									required
 								/>
 							</div>
@@ -90,7 +99,7 @@ export default class Checkout extends Component {
 										placeholder='MM'
 										id='checkout-date-1'
 										type='number'
-										value={this.state.formDate1}
+										value={formDate1}
 										required
 									/>
 									<span> / </span>
@@ -102,7 +111,7 @@ export default class Checkout extends Component {
 										placeholder='YY'
 										id='checkout-date-2'
 										type='number'
-										value={this.state.formDate2}
+										value={formDate2}
 										required
 									/>
 								</div>
@@ -118,7 +127,7 @@ export default class Checkout extends Component {
 									name='formCardNumber'
 									placeholder='Card Number'
 									type='number'
-									value={this.state.formCardNumber}
+									value={formCardNumber}
 									required
 								/>
 							</div>
@@ -129,16 +138,12 @@ export default class Checkout extends Component {
 									name='formCVC'
 									placeholder='CVC'
 									type='number'
-									value={this.state.formCVC}
+									value={formCVC}
 									required
 								/>
 							</div>
 						</div>
-						{this.state.formCardName &&
-						this.state.formCardNumber &&
-						this.state.formDate1 &&
-						this.state.formDate2 &&
-						this.state.formCVC ? (
+						{formCardName && formCardNumber && formDate1 && formDate2 && formCVC ? (
 							<Link
 								onClick={this.checkSuccessState}
 								className='form-link'

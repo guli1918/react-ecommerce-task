@@ -49,13 +49,16 @@ export default class data extends Component {
 		this.setState({ isLoading: false });
 	}
 	render() {
-		return !this.state.isLoading ? (
-			this.props.category === 'all' ? (
-				this.props.products.map((d, index) => (
+		const { isLoading, hover } = this.state;
+		const { category, products, card, currencyType, updateCardData } = this.props;
+
+		return !isLoading ? (
+			category === 'all' ? (
+				products.map((d, index) => (
 					<div
 						id={d.id}
 						key={index}
-						className='product'
+						className={card ? 'product-noFocus' : 'product'}
 						onMouseOver={() => this.handleHover(d.id)}
 						onMouseLeave={() => this.setState({ hover: false })}
 					>
@@ -71,16 +74,22 @@ export default class data extends Component {
 								</div>
 							</div>
 							<div className='product-desc'>
-								<h4>{d.name}</h4>
+								<h4>
+									{d.brand} {d.name}
+								</h4>
 								<p>
-									{this.props.currencyType ? (
+									{currencyType ? (
 										<>
-											{d.prices[0].currency === this.props.currencyType &&
+											{d.prices[0].currency === currencyType &&
 												'$' + d.prices[0].amount}
-											{d.prices[1].currency === this.props.currencyType &&
+											{d.prices[1].currency === currencyType &&
 												'₤' + d.prices[1].amount}
-											{d.prices[3].currency === this.props.currencyType &&
+											{d.prices[2].currency === currencyType &&
+												'A$' + d.prices[2].amount}
+											{d.prices[3].currency === currencyType &&
 												'¥' + d.prices[3].amount}
+											{d.prices[4].currency === currencyType &&
+												'₽' + d.prices[4].amount}
 										</>
 									) : (
 										'$' + d.prices[0].amount
@@ -88,10 +97,10 @@ export default class data extends Component {
 								</p>
 							</div>
 						</Link>
-						{this.state.hover === d.id && (
+						{hover === d.id && (
 							<div
 								onClick={() => {
-									d.inStock && this.props.updateCardData(d);
+									d.inStock && updateCardData(d);
 								}}
 								className={d.inStock ? 'cards ' : 'cards cards-disable'}
 							>
@@ -101,9 +110,9 @@ export default class data extends Component {
 					</div>
 				))
 			) : (
-				this.props.products.map(
+				products.map(
 					(d, index) =>
-						this.props.category === d.category && (
+						category === d.category && (
 							<div
 								id={d.id}
 								key={index}
@@ -128,17 +137,18 @@ export default class data extends Component {
 										<h4>{d.name}</h4>
 
 										<p>
-											{this.props.currencyType ? (
+											{currencyType ? (
 												<>
-													{d.prices[0].currency ===
-														this.props.currencyType &&
+													{d.prices[0].currency === currencyType &&
 														'$' + d.prices[0].amount}
-													{d.prices[1].currency ===
-														this.props.currencyType &&
+													{d.prices[1].currency === currencyType &&
 														'₤' + d.prices[1].amount}
-													{d.prices[3].currency ===
-														this.props.currencyType &&
+													{d.prices[2].currency === currencyType &&
+														'A$' + d.prices[2].amount}
+													{d.prices[3].currency === currencyType &&
 														'¥' + d.prices[3].amount}
+													{d.prices[4].currency === currencyType &&
+														'₽' + d.prices[4].amount}
 												</>
 											) : (
 												'$' + d.prices[0].amount
@@ -146,10 +156,10 @@ export default class data extends Component {
 										</p>
 									</div>
 								</Link>
-								{this.state.hover === d.id && (
+								{hover === d.id && (
 									<div
 										onClick={() => {
-											d.inStock && this.props.updateCardData(d);
+											d.inStock && updateCardData(d);
 										}}
 										className={d.inStock ? 'cards ' : 'cards cards-disable'}
 									>

@@ -9,17 +9,28 @@ export default class MiniCard extends Component {
 	};
 
 	render() {
+		const { isLoading } = this.state;
+		const {
+			cardData,
+			currencyType,
+			attributeValue,
+			updateCardData,
+			decreaseCardData,
+			totalPrice,
+			cardClick,
+		} = this.props;
+
 		return (
-			!this.state.isLoading && (
+			!isLoading && (
 				<div className='miniCard-main'>
 					<div className='miniCard-title'>
 						<div className='miniCard-top'>
 							<h3>
 								My Bag,
-								<span> {this.props.cardData.length}</span>
+								<span> {cardData.length}</span>
 							</h3>
 						</div>
-						{this.props.cardData.map(
+						{cardData.map(
 							(item, index) =>
 								item && (
 									<div key={index} className='miniCard-product'>
@@ -29,40 +40,34 @@ export default class MiniCard extends Component {
 											<div className='miniCard-left-price'>
 												{item.prices.map(
 													(price) =>
-														price.currency ===
-															this.props.currencyType &&
+														price.currency === currencyType &&
 														(price.currency === 'USD'
-															? '$' + price.amount
+															? '$' +
+															  price.amount.toFixed(2) * item.qty
 															: price.currency === 'GBP'
-															? '£' + price.amount
-															: '¥' + price.amount)
+															? '£' +
+															  price.amount.toFixed(2) * item.qty
+															: price.currency === 'AUD'
+															? 'A$' +
+															  price.amount.toFixed(2) * item.qty
+															: price.currency === 'JPY'
+															? '¥' +
+															  price.amount.toFixed(2) * item.qty
+															: '₽' +
+															  price.amount.toFixed(2) * item.qty)
 												)}
 											</div>
 											{
 												<div className='miniCard-left-attribute'>
 													<p>
-														{/* {this.props.attributeValue
-															? item.attributes.map(
-																	(attribute) =>
-																		attribute.items &&
-																		attribute.items[
-																			this.props
-																				.attributeValue
-																		].displayValue
-															  )
-															: item.attributes
-															? item.attributes[0].items[0]
-																	.displayValue
-															: 'DFLT'} */}
-														{this.props.attributeValue
+														{attributeValue
 															? item.attributes.length > 0
 																? item.attributes.map((attribute) =>
 																		attribute.items[
-																			this.props
-																				.attributeValue
+																			this.attributeValue
 																		]
 																			? attribute.items[
-																					this.props
+																					this
 																						.attributeValue
 																			  ].displayValue
 																			: attribute.items[0]
@@ -75,11 +80,9 @@ export default class MiniCard extends Component {
 											}
 										</div>
 										<div className='miniCard-middle'>
-											<p onClick={() => this.props.updateCardData(item)}>+</p>
+											<p onClick={() => updateCardData(item)}>+</p>
 											<h3>{item.qty}</h3>
-											<p onClick={() => this.props.decreaseCardData(item)}>
-												-
-											</p>
+											<p onClick={() => decreaseCardData(item)}>-</p>
 										</div>
 										<div className='miniCard-right'>
 											<>
@@ -99,25 +102,29 @@ export default class MiniCard extends Component {
 							<div className='miniCard-bottom-amount'>
 								<p>Total</p>
 								<span>
-									{this.props.currencyType === 'USD'
+									{currencyType === 'USD'
 										? '$'
-										: this.props.currencyType === 'GBP'
+										: currencyType === 'GBP'
 										? '£'
-										: '¥'}
-									{this.props.totalPrice.toFixed(2)}
+										: currencyType === 'AUD'
+										? 'A$'
+										: currencyType === 'JPY'
+										? '¥'
+										: '₽'}
+									{totalPrice.toFixed(2)}
 								</span>
 							</div>
 
 							<div className='miniCard-bottom-payment'>
 								<Link
-									onClick={() => this.props.cardClick(false)}
+									onClick={() => cardClick()}
 									to='/card'
 									className='miniCard-link'
 								>
 									<p className='miniCard-bottom-payment-left'>VIEW BAG</p>
 								</Link>
 								<Link
-									onClick={() => this.props.cardClick(false)}
+									onClick={() => cardClick()}
 									to='/checkout'
 									className='miniCard-link'
 								>

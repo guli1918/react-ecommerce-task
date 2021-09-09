@@ -13,17 +13,47 @@ import SuccessPage from './components/successPage/SuccessPage';
 class App extends Component {
 	state = {
 		products: [],
-		singleProduct: [],
 		currencyType: 'USD',
 		cardData: [],
-		attributeValue: null,
 		totalPrice: 0,
 		successState: false,
 		cardClick: false,
+		currency: false,
+		card: false,
+		attributeValue: [],
+		uniqueValue: true,
+	};
+
+	handleClickCurrency = (state) => {
+		this.setState({ currency: state });
+		this.setState({ card: false });
+	};
+	handleClickCard = (state) => {
+		this.setState({ card: state });
+		this.setState({ currency: false });
 	};
 
 	updateCurrencyType = (currencyType) => {
 		this.setState({ currencyType });
+	};
+
+	updateAttributeValue = (item) => {
+		const { cardData, attributeValue } = this.state;
+		const existingProductIndex = cardData.findIndex((product) => product.id === item.id);
+
+		const uniqueValue =
+			cardData[existingProductIndex].selectedAttributes.indexOf(attributeValue) === -1;
+		cardData[existingProductIndex].selectedAttributes = [
+			...cardData[existingProductIndex].selectedAttributes,
+			attributeValue,
+		];
+		this.setState({ uniqueValue });
+		this.setState({ attributeValue: [] });
+		console.log(cardData[existingProductIndex].selectedAttributes);
+	};
+
+	getAttributeValue = (value) => {
+		this.setState({ attributeValue: [...this.state.attributeValue, value] });
 	};
 
 	displayNextImg = (item) => {
@@ -55,15 +85,15 @@ class App extends Component {
 				...data,
 				qty: 1,
 				displayImg: 0,
+				selectedAttributes: [],
 			});
 		}
-
 		this.setState({ cardData });
 	};
 
 	decreaseCardData = (data) => {
 		const { cardData } = this.state;
-		const productIndex = this.state.cardData.findIndex((product) => product.id === data.id);
+		const productIndex = cardData.findIndex((product) => product.id === data.id);
 
 		if (cardData[productIndex].qty > 1) {
 			cardData[productIndex].qty = cardData[productIndex].qty - 1;
@@ -74,15 +104,11 @@ class App extends Component {
 		this.setState({ cardData });
 	};
 
-	updateAttributeValue = (attributeValue) => {
-		this.setState({ attributeValue });
-	};
-
 	getTotalPrice = () => {
-		const { cardData } = this.state;
+		const { cardData, currencyType } = this.state;
 
 		return cardData.reduce((a, c) => {
-			const price = c.prices.find((p) => p.currency === this.state.currencyType);
+			const price = c.prices.find((p) => p.currency === currencyType);
 
 			return a + price.amount * c.qty;
 		}, 0);
@@ -92,86 +118,102 @@ class App extends Component {
 		this.setState({ successState: state });
 	};
 
+	handleClickOverlays = () => {
+		this.setState({
+			card: false,
+			currency: false,
+		});
+	};
+
 	render() {
+		const { products, currencyType, cardData, successState, currency, card, attributeValue } =
+			this.state;
+
 		const totalPrice = this.getTotalPrice();
 		return (
 			<Router>
 				<Topbar
-					currencyType={this.state.currencyType}
+					currencyType={currencyType}
 					updateCurrencyType={this.updateCurrencyType}
-					cardData={this.state.cardData}
+					cardData={cardData}
 					updateCardData={this.updateCardData}
 					decreaseCardData={this.decreaseCardData}
-					attributeValue={this.state.attributeValue}
 					totalPrice={totalPrice}
+					card={card}
+					currency={currency}
+					handleClickCurrency={this.handleClickCurrency}
+					handleClickCard={this.handleClickCard}
 				/>
-				<Switch>
-					<Route exact path='/'>
-						<Main
-							updateCardData={this.updateCardData}
-							currencyType={this.state.currencyType}
-							category='all'
-							products={this.state.products}
-							setProducts={(products) => this.setState({ products })}
-						/>
-					</Route>
-					<Route path='/clothes'>
-						<Main
-							updateCardData={this.updateCardData}
-							currencyType={this.state.currencyType}
-							category='clothes'
-							products={this.state.products}
-							setProducts={(products) => this.setState({ products })}
-						/>
-					</Route>
-					<Route path='/tech'>
-						<Main
-							updateCardData={this.updateCardData}
-							currencyType={this.state.currencyType}
-							category='tech'
-							products={this.state.products}
-							setProducts={(products) => this.setState({ products })}
-						/>
-					</Route>
-					<Route
-						path='/product/:id'
-						render={(props) => (
-							<SingleProduct
+				<div onClick={this.handleClickOverlays} className='App'>
+					<Switch>
+						<Route exact path='/'>
+							<Main
 								updateCardData={this.updateCardData}
-								currencyType={this.state.currencyType}
-								updateAttributeValue={this.updateAttributeValue}
-								attributeValue={this.state.attributeValue}
-								{...props}
+								currencyType={currencyType}
+								category='all'
+								products={products}
+								setProducts={(products) => this.setState({ products })}
+								card={card}
 							/>
-						)}
-					/>
-					<Route path='/card'>
-						<Card
-							updateCardData={this.updateCardData}
-							decreaseCardData={this.decreaseCardData}
-							attributeValue={this.state.attributeValue}
-							cardData={this.state.cardData}
-							currencyType={this.state.currencyType}
-							displayNextImg={this.displayNextImg}
-							displayPreviousImg={this.displayPreviousImg}
-						/>
-					</Route>
-					<Route path='/checkout'>
-						<Checkout
-							cardData={this.state.cardData}
-							currencyType={this.state.currencyType}
-							totalPrice={totalPrice}
-							checkSuccessState={this.checkSuccessState}
-						/>
-					</Route>
-					{this.state.successState && (
-						<Route path='/success'>
-							<SuccessPage />
 						</Route>
-					)}
-					<Route component={NotFoundPage} />
-					<Redirect to='/404' />
-				</Switch>
+						<Route path='/clothes'>
+							<Main
+								updateCardData={this.updateCardData}
+								currencyType={currencyType}
+								category='clothes'
+								products={products}
+								setProducts={(products) => this.setState({ products })}
+							/>
+						</Route>
+						<Route path='/tech'>
+							<Main
+								updateCardData={this.updateCardData}
+								currencyType={currencyType}
+								category='tech'
+								products={products}
+								setProducts={(products) => this.setState({ products })}
+							/>
+						</Route>
+						<Route
+							path='/product/:id'
+							render={(props) => (
+								<SingleProduct
+									updateCardData={this.updateCardData}
+									currencyType={currencyType}
+									updateAttributeValue={this.updateAttributeValue}
+									getAttributeValue={this.getAttributeValue}
+									attributeValue={attributeValue}
+									{...props}
+								/>
+							)}
+						/>
+						<Route path='/card'>
+							<Card
+								updateCardData={this.updateCardData}
+								decreaseCardData={this.decreaseCardData}
+								cardData={cardData}
+								currencyType={currencyType}
+								displayNextImg={this.displayNextImg}
+								displayPreviousImg={this.displayPreviousImg}
+							/>
+						</Route>
+						<Route path='/checkout'>
+							<Checkout
+								cardData={cardData}
+								currencyType={currencyType}
+								totalPrice={totalPrice}
+								checkSuccessState={this.checkSuccessState}
+							/>
+						</Route>
+						{successState && (
+							<Route path='/success'>
+								<SuccessPage />
+							</Route>
+						)}
+						<Route component={NotFoundPage} />
+						<Redirect to='/404' />
+					</Switch>
+				</div>
 			</Router>
 		);
 	}

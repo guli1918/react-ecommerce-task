@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router';
+import Loader from 'react-loader-spinner';
+import parse from 'html-react-parser';
 
 import './singleProduct.css';
 
@@ -8,13 +10,14 @@ class SingleProduct extends Component {
 		image: 0,
 		size: null,
 		product: null,
+		isLoading: true,
 	};
 
 	async componentDidMount() {
-		const { history } = this.props;
+		const { history, match } = this.props;
 
 		const my_query = `{
-			product(id:"${this.props.match.params.id}"){
+			product(id:"${match.params.id}"){
 			  id
 			  name
 			  gallery
@@ -56,31 +59,32 @@ class SingleProduct extends Component {
 			// TODO: Show toast alert to user indicating that the product details could not be loaded properly.
 			console.error('An error occurred while fetcing product data.');
 		}
+		this.setState({ isLoading: false });
 	}
 
 	async componentDidUpdate() {
-		const { history, location } = this.props;
+		const { history, location, match } = this.props;
 		if (this.state.product.id !== location.pathname.split('/')[2]) {
 			const my_query = `{
-				product(id:"${this.props.match.params.id}"){
-				  id
+				product(id:"${match.params.id}"){
+					id
 				  name
 				  gallery
 				  description
 				  brand
 				  inStock
 				  prices{
-					currency
-					amount
-				  }
-				  attributes{
+					  currency
+					  amount
+					}
+					attributes{
 					  name
 					items {
-					  displayValue
-					  id
-					  value
+						displayValue
+						id
+						value
 					}
-				  }
+				}
 				}
 			  }`;
 			const url = 'http://localhost:4000/';
@@ -107,14 +111,24 @@ class SingleProduct extends Component {
 		}
 	}
 
-	imageClick(id) {
+	updateCard = (product) => {
+		this.props.updateCardData(product);
+		this.props.updateAttributeValue(product);
+	};
+
+	imageClick = (id) => {
 		this.setState({ image: id });
-	}
+	};
+
+	handleAttributeValue = (item) => {
+		this.props.getAttributeValue(item.displayValue);
+	};
 
 	render() {
-		const { product } = this.state;
+		const { product, isLoading, image } = this.state;
+		const { attributeValue, currencyType } = this.props;
 
-		return (
+		return !isLoading ? (
 			product && (
 				<div className='singleProduct'>
 					<div className='product-wrapper'>
@@ -124,7 +138,7 @@ class SingleProduct extends Component {
 									<img
 										onClick={() => this.imageClick(index)}
 										className={
-											this.state.image === index
+											image === index
 												? 'secondary-img secondary-active'
 												: 'secondary-img'
 										}
@@ -137,11 +151,7 @@ class SingleProduct extends Component {
 						</div>
 						<div className='product-middle'>
 							{product.gallery.length > 0 && (
-								<img
-									className='main-img'
-									src={product.gallery[this.state.image]}
-									alt=''
-								/>
+								<img className='main-img' src={product.gallery[image]} alt='' />
 							)}
 						</div>
 						<div className='product-right'>
@@ -158,7 +168,10 @@ class SingleProduct extends Component {
 											product.attributes[index].name === 'Color'
 												? product.attributes[index].items.map(
 														(item, index) => (
-															<div
+															<button
+																onClick={() =>
+																	this.handleAttributeValue(item)
+																}
 																key={index}
 																className='size-box'
 																style={{
@@ -169,27 +182,26 @@ class SingleProduct extends Component {
 																			  item.displayValue
 																			: item.displayValue,
 																}}
-															></div>
+															></button>
 														)
 												  )
 												: product.attributes[index].items.map(
 														(item, index) => (
-															<div
-																key={index}
+															<button
 																onClick={() =>
-																	this.props.updateAttributeValue(
-																		index
-																	)
+																	this.handleAttributeValue(item)
 																}
+																key={index}
 																className={
-																	index ===
-																	this.props.attributeValue
+																	attributeValue.includes(
+																		item.displayValue
+																	)
 																		? 'size-box size-box-active'
 																		: 'size-box'
 																}
 															>
 																{item.value}
-															</div>
+															</button>
 														)
 												  )}
 										</div>
@@ -198,17 +210,18 @@ class SingleProduct extends Component {
 							<div className='right-price'>
 								<h3 className='right-price-text'>PRICE:</h3>
 								<h4 className='right-price-amount'>
-									{this.props.currencyType ? (
+									{currencyType ? (
 										<>
-											{product.prices[0].currency ===
-												this.props.currencyType &&
+											{product.prices[0].currency === currencyType &&
 												'$' + product.prices[0].amount}
-											{product.prices[1].currency ===
-												this.props.currencyType &&
+											{product.prices[1].currency === currencyType &&
 												'₤' + product.prices[1].amount}
-											{product.prices[3].currency ===
-												this.props.currencyType &&
+											{product.prices[2].currency === currencyType &&
+												'$' + product.prices[2].amount}
+											{product.prices[3].currency === currencyType &&
 												'¥' + product.prices[3].amount}
+											{product.prices[4].currency === currencyType &&
+												'₽' + product.prices[4].amount}
 										</>
 									) : (
 										'$' + product.prices[0].amount
@@ -216,9 +229,7 @@ class SingleProduct extends Component {
 								</h4>
 							</div>
 							<div
-								onClick={() =>
-									product.inStock && this.props.updateCardData(product)
-								}
+								onClick={() => product.inStock && this.updateCard(product)}
 								className={
 									product.inStock
 										? 'add-to-card'
@@ -227,18 +238,15 @@ class SingleProduct extends Component {
 							>
 								<p>ADD TO CARD</p>
 							</div>
-							<div className='right-desc'>
-								<p
-									className='right-desc-text'
-									dangerouslySetInnerHTML={{
-										__html: this.state.product.description,
-									}}
-								/>
+							<div className='right-desc right-desc-text'>
+								{parse(product.description)}
 							</div>
 						</div>
 					</div>
 				</div>
 			)
+		) : (
+			<Loader className='loader' type='Oval' color='#5ece7b' height={100} width={100} />
 		);
 	}
 }

@@ -35,6 +35,7 @@
 	justify-content: center;
 	height: 50px;
 	width: 80px;
+	border-bottom: 1px solid transparent;
 }
 
 .link-active {
@@ -92,9 +93,27 @@
 	cursor: pointer;
 }
 
-/* .topBar-currency {
-	width: 1.2rem;
-} */
+.card-topBar-circle-small {
+	width: 20px;
+	height: 20px;
+	border-radius: 50%;
+	background-color: #1d1f22;
+	position: absolute;
+	bottom: 14px;
+	left: 11px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 10px;
+	color: white;
+	font-weight: 500;
+	cursor: pointer;
+}
+
+.topBar-middle {
+	width: 100%;
+	height: 100%;
+}
 
 .imgLeft-currency {
 	font-size: 1.25rem;
@@ -112,6 +131,15 @@
 
 .rotateDollar {
 	transform: rotate(180deg);
+}
+
+.topBar-right-part {
+	width: 95px;
+	height: 80px;
+	color: red;
+	right: 0;
+	top: 0;
+	position: absolute;
 }
 
 @media screen and (max-width: 430px) {
