@@ -195,10 +195,10 @@
 
 @media screen and (max-width: 430px) {
 	.card {
-		padding: 3rem;
-		margin-right: 1rem;
-		width: 125vw;
+		padding: 0;
+		width: 110vw;
 		height: 100vh;
+		margin-left: 2rem;
 	}
 	.card-product {
 		margin-bottom: 50px;
@@ -220,16 +220,11 @@
 	}
 
 	.card-product-middle {
-		/* align-items: flex-e; */
+		align-items: flex-end;
 		flex: 1;
 	}
 
-	/* .card-product-right {
-		align-items: flex-start;
-		justify-content: flex-end;
-	} */
-
-	.card-product-right img {
+	.card-right-main {
 		width: 203px;
 		height: 203px;
 		object-fit: contain;

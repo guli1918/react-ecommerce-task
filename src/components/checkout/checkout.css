@@ -186,6 +186,7 @@
 @media screen and (max-width: 430px) {
 	.checkout {
 		width: 100vw;
+		padding: 0;
 		padding-left: 20px;
 	}
 	.checkout-details {
@@ -208,6 +209,10 @@
 		margin-bottom: 20px;
 	}
 
+	.checkout-form-upper-1 {
+		height: 70px;
+	}
+
 	.checkout-form-below-2 input {
 		padding: 10px;
 		width: 138px;
@@ -218,5 +223,9 @@
 	.checkout-form-below {
 		flex-direction: column;
 		/* height: 120px; */
+	}
+
+	.checkout-details input {
+		margin: 3px 0;
 	}
 }
