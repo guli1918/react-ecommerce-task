@@ -64,7 +64,7 @@ export default class Checkout extends Component {
 							: currencyType === 'GBP'
 							? '£'
 							: currencyType === 'AUD'
-							? '¥'
+							? 'A$'
 							: currencyType === 'JPY'
 							? '¥'
 							: '₽'}

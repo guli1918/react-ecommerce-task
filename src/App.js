@@ -49,7 +49,6 @@ class App extends Component {
 		];
 		this.setState({ uniqueValue });
 		this.setState({ attributeValue: [] });
-		console.log(cardData[existingProductIndex].selectedAttributes);
 	};
 
 	getAttributeValue = (value) => {
