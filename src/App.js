@@ -9,6 +9,7 @@ import NotFoundPage from './components/notFoundPage/NotFoundPage';
 import Checkout from './components/checkout/Checkout';
 import Card from './components/card/Card';
 import SuccessPage from './components/successPage/SuccessPage';
+import CategoryPage from './components/categoryPage/CategoryPage';
 
 class App extends Component {
 	state = {
@@ -49,6 +50,8 @@ class App extends Component {
 		];
 		this.setState({ uniqueValue });
 		this.setState({ attributeValue: [] });
+		console.log(attributeValue);
+		console.log(cardData);
 	};
 
 	getAttributeValue = (value) => {
@@ -97,10 +100,20 @@ class App extends Component {
 		if (cardData[productIndex].qty > 1) {
 			cardData[productIndex].qty = cardData[productIndex].qty - 1;
 		} else {
-			cardData.splice(productIndex, 1);
+			const result = window.confirm(
+				`Are you sure you want to remove "${
+					cardData[productIndex].brand + ' ' + cardData[productIndex].name
+				}" from basket?`
+			);
+			if (result === true) {
+				cardData.splice(productIndex, 1);
+			}
 		}
-
 		this.setState({ cardData });
+	};
+	emptyCardData = (data) => {
+		// const { cardData } = this.state;
+		this.setState({ cardData: data });
 	};
 
 	getTotalPrice = () => {
@@ -149,28 +162,30 @@ class App extends Component {
 							<Main
 								updateCardData={this.updateCardData}
 								currencyType={currencyType}
-								category='all'
+								category='all products'
 								products={products}
 								setProducts={(products) => this.setState({ products })}
 								card={card}
 							/>
 						</Route>
 						<Route path='/clothes'>
-							<Main
+							<CategoryPage
+								categoryName='clothes'
 								updateCardData={this.updateCardData}
 								currencyType={currencyType}
-								category='clothes'
 								products={products}
 								setProducts={(products) => this.setState({ products })}
+								card={card}
 							/>
 						</Route>
 						<Route path='/tech'>
-							<Main
+							<CategoryPage
+								categoryName='tech'
 								updateCardData={this.updateCardData}
 								currencyType={currencyType}
-								category='tech'
 								products={products}
 								setProducts={(products) => this.setState({ products })}
+								card={card}
 							/>
 						</Route>
 						<Route
@@ -186,7 +201,7 @@ class App extends Component {
 								/>
 							)}
 						/>
-						<Route path='/card'>
+						<Route path='/cart'>
 							<Card
 								updateCardData={this.updateCardData}
 								decreaseCardData={this.decreaseCardData}
@@ -202,6 +217,7 @@ class App extends Component {
 								currencyType={currencyType}
 								totalPrice={totalPrice}
 								checkSuccessState={this.checkSuccessState}
+								emptyCardData={this.emptyCardData}
 							/>
 						</Route>
 						{successState && (

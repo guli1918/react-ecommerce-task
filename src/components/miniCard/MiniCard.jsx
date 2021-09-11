@@ -26,8 +26,13 @@ export default class MiniCard extends Component {
 					<div className='miniCard-title'>
 						<div className='miniCard-top'>
 							<h3>
-								My Bag,
-								<span> {cardData.length}</span>
+								{cardData.length === 0 ? (
+									<span>Cart is empty!</span>
+								) : (
+									<>
+										My Bag, <span>{cardData.length} items</span>
+									</>
+								)}
 							</h3>
 						</div>
 						{cardData.map(
@@ -118,7 +123,7 @@ export default class MiniCard extends Component {
 							<div className='miniCard-bottom-payment'>
 								<Link
 									onClick={() => cardClick()}
-									to='/card'
+									to='/cart'
 									className='miniCard-link'
 								>
 									<p className='miniCard-bottom-payment-left'>VIEW BAG</p>

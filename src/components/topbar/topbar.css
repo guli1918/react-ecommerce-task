@@ -120,6 +120,11 @@
 	color: rgb(44, 44, 44);
 }
 
+.imgLeft:hover {
+	font-weight: 500;
+	margin-right: 15.8px;
+}
+
 .down {
 	width: 0.6rem;
 }
@@ -127,6 +132,13 @@
 .card-topBar {
 	width: 1.2rem;
 	cursor: pointer;
+}
+
+.card-topBar:hover {
+	background-color: rgba(211, 211, 211, 0.1);
+	border-radius: 2px;
+	width: 1.25rem;
+	margin-left: -0.8px;
 }
 
 .rotateDollar {

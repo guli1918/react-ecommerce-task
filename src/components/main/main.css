@@ -94,6 +94,17 @@
 	font-size: 0.9rem;
 }
 
+.product-noFocus p {
+	font-weight: 500;
+	font-size: 0.9rem;
+}
+
+.product-noFocus h4 {
+	font-weight: 300;
+	font-size: 0.9rem;
+	margin-bottom: 0.2rem;
+}
+
 .outOfStock {
 	position: absolute;
 	width: 50%;
@@ -140,7 +151,6 @@
 	}
 
 	.main-wrapper {
-		/* width: 100vw; */
 		max-width: 110%;
 		display: flex;
 		justify-content: flex-start;

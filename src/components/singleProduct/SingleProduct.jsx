@@ -64,7 +64,9 @@ class SingleProduct extends Component {
 
 	async componentDidUpdate() {
 		const { history, location, match } = this.props;
-		if (this.state.product.id !== location.pathname.split('/')[2]) {
+		const { product } = this.state;
+
+		if (product.id !== location.pathname.split('/')[2]) {
 			const my_query = `{
 				product(id:"${match.params.id}"){
 					id
@@ -217,7 +219,7 @@ class SingleProduct extends Component {
 											{product.prices[1].currency === currencyType &&
 												'₤' + product.prices[1].amount}
 											{product.prices[2].currency === currencyType &&
-												'$' + product.prices[2].amount}
+												'A$' + product.prices[2].amount}
 											{product.prices[3].currency === currencyType &&
 												'¥' + product.prices[3].amount}
 											{product.prices[4].currency === currencyType &&

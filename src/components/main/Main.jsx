@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
+import MainPage from '../mainPage/MainPage';
 import './main.css';
-import Data from '../data/Data';
 
 export default class Main extends Component {
 	state = {
@@ -11,11 +11,11 @@ export default class Main extends Component {
 		const { updateCardData, currencyType, category, products, setProducts, card } = this.props;
 
 		return (
-			<div className={this.props.card ? 'main-noFocus' : 'main'}>
+			<div className='main'>
 				<h1 className='main-text'>{this.props.category.toUpperCase()}</h1>
 				<div className='main-wrapper'>
 					<div className='products'>
-						<Data
+						<MainPage
 							updateCardData={updateCardData}
 							currencyType={currencyType}
 							category={category}

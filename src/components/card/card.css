@@ -42,6 +42,14 @@
 	font-size: 30px;
 }
 
+.card-product-left-title:hover {
+	color: rgb(93, 93, 93);
+}
+
+.card-product-left-title:active {
+	color: rgb(126, 126, 126);
+}
+
 .card-product-left-link {
 	color: inherit;
 	text-decoration: none;

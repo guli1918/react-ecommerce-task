@@ -19,6 +19,11 @@ export default class Checkout extends Component {
 
 	checkSuccessState = () => {
 		this.props.checkSuccessState(true);
+		this.props.emptyCardData([]);
+	};
+
+	checkCartCount = () => {
+		this.props.cardData.length === 0 && alert("Cart can't be empty!");
 	};
 	render() {
 		const { cardData, currencyType, totalPrice } = this.props;
@@ -143,7 +148,12 @@ export default class Checkout extends Component {
 								/>
 							</div>
 						</div>
-						{formCardName && formCardNumber && formDate1 && formDate2 && formCVC ? (
+						{formCardName &&
+						formCardNumber &&
+						formDate1 &&
+						formDate2 &&
+						formCVC &&
+						cardData.length > 0 ? (
 							<Link
 								onClick={this.checkSuccessState}
 								className='form-link'
@@ -154,7 +164,11 @@ export default class Checkout extends Component {
 								</button>
 							</Link>
 						) : (
-							<button type='submit' className='checkout-form-button-disabled'>
+							<button
+								onClick={this.checkCartCount}
+								type='submit'
+								className='checkout-form-button-disabled'
+							>
 								PAY NOW
 							</button>
 						)}
