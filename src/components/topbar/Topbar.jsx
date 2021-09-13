@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router';
 
 import './topbar.css';
 import Currency from '../currency/Currency';
 import MiniCard from '../miniCard/MiniCard';
 
-export default class Topbar extends Component {
+class Topbar extends Component {
 	state = {
-		activePage: null,
+		activePage: window.location.href.split('/')[3],
 		location1: null,
 		location2: null,
 	};
@@ -64,11 +65,13 @@ export default class Topbar extends Component {
 								<Link
 									key='1'
 									onClick={() => {
-										this.setState({ activePage: 1 });
+										this.setState({
+											activePage: '',
+										});
 										handleClickCard(false);
 										handleClickCurrency(false);
 									}}
-									className={activePage === 1 ? 'link link-active' : 'link'}
+									className={activePage === '' ? 'link link-active' : 'link'}
 									to='/'
 								>
 									ALL
@@ -77,11 +80,15 @@ export default class Topbar extends Component {
 							<li>
 								<Link
 									onClick={() => {
-										this.setState({ activePage: 2 });
+										this.setState({
+											activePage: 'clothes',
+										});
 										handleClickCard(false);
 										handleClickCurrency(false);
 									}}
-									className={activePage === 2 ? 'link link-active' : 'link'}
+									className={
+										activePage === 'clothes' ? 'link link-active' : 'link'
+									}
 									to='/clothes'
 								>
 									CLOTHES
@@ -90,11 +97,13 @@ export default class Topbar extends Component {
 							<li>
 								<Link
 									onClick={() => {
-										this.setState({ activePage: 3 });
+										this.setState({
+											activePage: 'tech',
+										});
 										handleClickCard(false);
 										handleClickCurrency(false);
 									}}
-									className={activePage === 3 ? 'link link-active' : 'link'}
+									className={activePage === 'tech' ? 'link link-active' : 'link'}
 									to='/tech'
 								>
 									TECH
@@ -162,3 +171,5 @@ export default class Topbar extends Component {
 		);
 	}
 }
+
+export default withRouter(Topbar);

@@ -2,7 +2,11 @@
 	padding: 3rem 6.2rem;
 	margin-right: 4rem;
 }
-
+.card-noFocus {
+	padding: 3rem 6.2rem;
+	margin-right: 4rem;
+	opacity: 0.5;
+}
 .card-main-title {
 	font-weight: 700;
 	font-size: 32px;

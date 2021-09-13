@@ -99,7 +99,7 @@ export default class MainPage extends Component {
 							onClick={() => {
 								d.inStock && updateCardData(d);
 							}}
-							className={d.inStock ? 'cards ' : 'cards cards-disable'}
+							className={d.inStock ? 'cards ' : 'cards-disable'}
 						>
 							<img className='shopping-card' src='assets/card.png' alt='' />
 						</div>

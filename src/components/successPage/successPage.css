@@ -2,6 +2,11 @@
 	height: calc(100vh - 80px);
 }
 
+.success-noFocus {
+	height: calc(100vh - 80px);
+	opacity: 0.5;
+}
+
 .success-content {
 	display: flex;
 	justify-content: center;

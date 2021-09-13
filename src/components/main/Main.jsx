@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import MainPage from '../mainPage/MainPage';
+
 import './main.css';
 
 export default class Main extends Component {

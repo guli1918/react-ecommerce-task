@@ -1,10 +1,16 @@
 .singleProduct {
-	/* position: absolute;
-	top: 70px; */
 	padding: 0.5rem 3rem;
 	width: 100%;
 	margin-top: 2rem;
 	box-sizing: border-box;
+}
+
+.singleProduct-noFocus {
+	padding: 0.5rem 3rem;
+	width: 100%;
+	margin-top: 2rem;
+	box-sizing: border-box;
+	opacity: 0.5;
 }
 
 .product-wrapper {
@@ -114,9 +120,15 @@
 	opacity: 0.5;
 }
 
+.size-box-color {
+	transform: scale(1.1);
+	border: 3px solid black;
+}
+
 .size-box-active {
 	background-color: black;
 	color: white;
+	transform: scale(1.05);
 }
 
 .size-box-active:hover {

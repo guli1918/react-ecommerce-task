@@ -1,0 +1,173 @@
+.checkout-details {
+	margin-top: 4rem;
+}
+
+.checkout-details h3 {
+	padding: 12px 0;
+	border-bottom: 1px solid #e5e5e5;
+	display: flex;
+	justify-content: flex-start;
+}
+
+.checkout-form-upper {
+	display: flex;
+	height: 30px;
+	margin-bottom: 2rem;
+	justify-content: flex-start;
+	padding: 24px 0;
+}
+
+.checkout-form-upper-1 {
+	display: flex;
+	flex-direction: column;
+	margin-right: 24px;
+}
+
+.checkout-form-upper-1 label {
+	color: gray;
+	margin-bottom: 12px;
+	font-size: 13px;
+	font-weight: 600;
+}
+
+.checkout-form-upper-1 input {
+	width: 450px;
+	padding: 10px;
+}
+
+.checkout-form-upper-2 {
+	display: flex;
+	flex-direction: column;
+}
+
+.checkout-form-upper-2 label {
+	color: gray;
+	margin-bottom: 12px;
+	font-size: 13px;
+	font-weight: 600;
+}
+
+.checkout-form-upper-2 input {
+	padding: 10px;
+}
+
+#checkout-date-1 {
+	width: 50px;
+}
+#checkout-date-2 {
+	width: 50px;
+}
+
+.checkout-form-below {
+	display: flex;
+	justify-content: flex-start;
+}
+
+.checkout-form-below-1 {
+	display: flex;
+	flex-direction: column;
+	margin-right: 24px;
+}
+
+.checkout-form-below-1 label {
+	color: gray;
+	margin-bottom: 12px;
+	font-size: 13px;
+	font-weight: 600;
+}
+
+.checkout-form-below-1 input {
+	width: 450px;
+	padding: 10px;
+}
+
+.checkout-form-below-2 {
+	display: flex;
+	flex-direction: column;
+}
+.checkout-form-below-2 label {
+	color: gray;
+	margin-bottom: 12px;
+	font-size: 13px;
+	font-weight: 600;
+}
+
+.checkout-form-below-2 input {
+	padding: 10px;
+	width: 138px;
+}
+
+.checkout-form-button-disabled {
+	margin-top: 2rem;
+	width: 474px;
+	padding: 12px;
+	border: none;
+	background-color: gray;
+	color: white;
+	font-weight: 500;
+	font-size: 24px;
+	cursor: not-allowed;
+}
+
+.checkout-form-button {
+	margin-top: 2rem;
+	width: 474px;
+	padding: 12px;
+	border: none;
+	background-color: #43aa5e;
+	color: white;
+	font-weight: 500;
+	font-size: 24px;
+	cursor: pointer;
+}
+
+.checkout-form-button:hover {
+	background-color: #69b67c;
+}
+
+.checkout-form-button:active {
+	background-color: #78da90;
+}
+
+@media screen and (max-width: 430px) {
+	.checkout-details {
+		display: flex;
+		flex-direction: column;
+	}
+	.checkout-form-upper {
+		flex-direction: column;
+		height: 120px;
+		margin-bottom: 20px;
+	}
+
+	.checkout-form-upper-1 {
+		margin-bottom: 20px;
+	}
+	.checkout-form-below {
+		height: 150px;
+	}
+	.checkout-form-below-1 {
+		margin-bottom: 15px;
+	}
+
+	.checkout-form-upper-1 {
+		height: 70px;
+	}
+
+	.checkout-form-below-2 input {
+		padding: 10px;
+		width: 138px;
+	}
+	.checkout-form-upper-2-inner {
+		display: flex;
+	}
+	.checkout-form-below {
+		flex-direction: column;
+		margin-top: 50px;
+		/* height: 120px; */
+	}
+
+	.checkout-details input {
+		margin: 3px 0;
+	}
+}

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import CurrencyType from '../currencyType/CurrencyType';
 
 import './miniCard.css';
 
@@ -20,6 +21,8 @@ export default class MiniCard extends Component {
 			cardClick,
 		} = this.props;
 
+		const itemQuantity = this.props.cardData.reduce((a, item) => a + item.qty, 0);
+
 		return (
 			!isLoading && (
 				<div className='miniCard-main'>
@@ -30,7 +33,7 @@ export default class MiniCard extends Component {
 									<span>Cart is empty!</span>
 								) : (
 									<>
-										My Bag, <span>{cardData.length} items</span>
+										My Bag, <span>{itemQuantity} items</span>
 									</>
 								)}
 							</h3>
@@ -43,44 +46,37 @@ export default class MiniCard extends Component {
 											<h3>{item.brand}</h3>
 											<h3>{item.name}</h3>
 											<div className='miniCard-left-price'>
-												{item.prices.map(
-													(price) =>
-														price.currency === currencyType &&
-														(price.currency === 'USD'
-															? '$' +
-															  price.amount.toFixed(2) * item.qty
-															: price.currency === 'GBP'
-															? '£' +
-															  price.amount.toFixed(2) * item.qty
-															: price.currency === 'AUD'
-															? 'A$' +
-															  price.amount.toFixed(2) * item.qty
-															: price.currency === 'JPY'
-															? '¥' +
-															  price.amount.toFixed(2) * item.qty
-															: '₽' +
-															  price.amount.toFixed(2) * item.qty)
-												)}
+												<CurrencyType
+													item={item}
+													currencyType={currencyType}
+												/>
 											</div>
 											{
-												<div className='miniCard-left-attribute'>
-													<p>
-														{attributeValue
-															? item.attributes.length > 0
-																? item.attributes.map((attribute) =>
-																		attribute.items[
-																			this.attributeValue
-																		]
-																			? attribute.items[
-																					this
-																						.attributeValue
-																			  ].displayValue
-																			: attribute.items[0]
-																					.displayValue
-																  )
-																: 'none'
-															: 'DFLT'}
-													</p>
+												<div className='minicard-left-attributes'>
+													{Object.values(item.selectedAttributes).length >
+													0 ? (
+														Object.values(item.selectedAttributes).map(
+															(attributes, index) => (
+																<div
+																	key={index}
+																	className='miniCard-left-attribute'
+																>
+																	<p>{attributes.value}</p>
+																</div>
+															)
+														)
+													) : (
+														<div className='miniCard-left-attribute'>
+															<p>
+																{/* {item.attributes[0].items[0].value}
+																{
+																	item.attributes[0].items[0]
+																		.displayValue
+																} */}
+																DFLT
+															</p>
+														</div>
+													)}
 												</div>
 											}
 										</div>

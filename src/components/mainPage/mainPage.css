@@ -12,9 +12,7 @@
 	transform: translate(-50%);
 }
 
-.cards-disable {
-	cursor: not-allowed;
-}
 .cards-disable:hover {
-	background-color: #5ece7b;
+	background-color: gray;
+	cursor: not-allowed;
 }

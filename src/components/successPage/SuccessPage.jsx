@@ -5,8 +5,9 @@ import './successPage.css';
 
 export default class SuccessPage extends Component {
 	render() {
+		const { card } = this.props;
 		return (
-			<div className='success'>
+			<div className={card ? 'success-noFocus' : 'success'}>
 				<div className='success-content'>
 					<img src='assets/success.png' alt='' />
 					<h3 className='success-main'>Thank you, enjoy!</h3>

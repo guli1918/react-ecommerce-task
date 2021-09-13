@@ -13,8 +13,8 @@ class SingleProduct extends Component {
 		isLoading: true,
 	};
 
-	async componentDidMount() {
-		const { history, match } = this.props;
+	async fetchProductData() {
+		const { history, match, emptyAttributes } = this.props;
 
 		const my_query = `{
 			product(id:"${match.params.id}"){
@@ -50,6 +50,7 @@ class SingleProduct extends Component {
 
 			if (data && data.product) {
 				this.setState({ product: data.product });
+				emptyAttributes();
 			} else {
 				// Normally, we could check the response status to get users to 404 in case of not found product.
 				// However, the back-end returns 200 code for not found products, too.
@@ -62,54 +63,16 @@ class SingleProduct extends Component {
 		this.setState({ isLoading: false });
 	}
 
-	async componentDidUpdate() {
-		const { history, location, match } = this.props;
+	componentDidMount() {
+		this.fetchProductData();
+	}
+
+	componentDidUpdate() {
+		const { location } = this.props;
 		const { product } = this.state;
 
 		if (product.id !== location.pathname.split('/')[2]) {
-			const my_query = `{
-				product(id:"${match.params.id}"){
-					id
-				  name
-				  gallery
-				  description
-				  brand
-				  inStock
-				  prices{
-					  currency
-					  amount
-					}
-					attributes{
-					  name
-					items {
-						displayValue
-						id
-						value
-					}
-				}
-				}
-			  }`;
-			const url = 'http://localhost:4000/';
-			const response = await fetch(url, {
-				method: 'POST',
-				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify({ query: my_query }),
-			});
-
-			if (response.status === 200) {
-				const { data } = await response.json();
-
-				if (data && data.product) {
-					this.setState({ product: data.product });
-				} else {
-					// Normally, we could check the response status to get users to 404 in case of not found product.
-					// However, the back-end returns 200 code for not found products, too.
-					history.push('/404');
-				}
-			} else {
-				// TODO: Show toast alert to user indicating that the product details could not be loaded properly.
-				console.error('An error occurred while fetcing product data.');
-			}
+			this.fetchProductData();
 		}
 	}
 
@@ -122,17 +85,17 @@ class SingleProduct extends Component {
 		this.setState({ image: id });
 	};
 
-	handleAttributeValue = (item) => {
-		this.props.getAttributeValue(item.displayValue);
+	handleAttributeValue = (type, item) => {
+		this.props.setAttributeValue(type, item);
 	};
 
 	render() {
 		const { product, isLoading, image } = this.state;
-		const { attributeValue, currencyType } = this.props;
+		const { selectedAttributes, currencyType, card } = this.props;
 
 		return !isLoading ? (
 			product && (
-				<div className='singleProduct'>
+				<div className={card ? 'singleProduct-noFocus' : 'singleProduct'}>
 					<div className='product-wrapper'>
 						<div className='product-left'>
 							{product.gallery.length > 0 &&
@@ -172,10 +135,19 @@ class SingleProduct extends Component {
 														(item, index) => (
 															<button
 																onClick={() =>
-																	this.handleAttributeValue(item)
+																	this.handleAttributeValue(
+																		type.name,
+																		item
+																	)
 																}
 																key={index}
-																className='size-box'
+																className={
+																	selectedAttributes[type.name] &&
+																	selectedAttributes[type.name]
+																		.id === item.id
+																		? 'size-box size-box-color'
+																		: 'size-box'
+																}
 																style={{
 																	backgroundColor:
 																		item.displayValue !==
@@ -191,18 +163,21 @@ class SingleProduct extends Component {
 														(item, index) => (
 															<button
 																onClick={() =>
-																	this.handleAttributeValue(item)
+																	this.handleAttributeValue(
+																		type.name,
+																		item
+																	)
 																}
 																key={index}
 																className={
-																	attributeValue.includes(
-																		item.displayValue
-																	)
+																	selectedAttributes[type.name] &&
+																	selectedAttributes[type.name]
+																		.id === item.id
 																		? 'size-box size-box-active'
 																		: 'size-box'
 																}
 															>
-																{item.value}
+																{item.displayValue}
 															</button>
 														)
 												  )}

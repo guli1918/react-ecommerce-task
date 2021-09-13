@@ -10,6 +10,7 @@ import Checkout from './components/checkout/Checkout';
 import Card from './components/card/Card';
 import SuccessPage from './components/successPage/SuccessPage';
 import CategoryPage from './components/categoryPage/CategoryPage';
+import arraysEqual from '../src/utils/array';
 
 class App extends Component {
 	state = {
@@ -21,7 +22,7 @@ class App extends Component {
 		cardClick: false,
 		currency: false,
 		card: false,
-		attributeValue: [],
+		selectedAttributes: {},
 		uniqueValue: true,
 	};
 
@@ -38,24 +39,38 @@ class App extends Component {
 		this.setState({ currencyType });
 	};
 
-	updateAttributeValue = (item) => {
-		const { cardData, attributeValue } = this.state;
-		const existingProductIndex = cardData.findIndex((product) => product.id === item.id);
+	/*
+		Function to check if there is already the same product(alongside its attributes) in the card.
+	*/
+	areProductsSame = (productInCard, newProduct) => {
+		const { selectedAttributes } = this.state;
 
-		const uniqueValue =
-			cardData[existingProductIndex].selectedAttributes.indexOf(attributeValue) === -1;
-		cardData[existingProductIndex].selectedAttributes = [
-			...cardData[existingProductIndex].selectedAttributes,
-			attributeValue,
-		];
-		this.setState({ uniqueValue });
-		this.setState({ attributeValue: [] });
-		console.log(attributeValue);
-		console.log(cardData);
+		const selectedAttributeIds = Object.values(selectedAttributes).map((values) => values.id);
+		const productSelectedAttributeIds = Object.values(productInCard.selectedAttributes).map(
+			(values) => values.id
+		);
+
+		return (
+			productInCard.id === newProduct.id &&
+			arraysEqual(selectedAttributeIds, productSelectedAttributeIds)
+		);
 	};
 
-	getAttributeValue = (value) => {
-		this.setState({ attributeValue: [...this.state.attributeValue, value] });
+	updateAttributeValue = (product) => {
+		const { cardData, selectedAttributes } = this.state;
+		const existingProductIndex = cardData.findIndex((d) => this.areProductsSame(d, product));
+
+		if (existingProductIndex !== -1) {
+			cardData[existingProductIndex].selectedAttributes = selectedAttributes;
+		} else {
+			alert('Please choose item attributes first!');
+		}
+	};
+
+	setAttributeValue = (type, value) => {
+		this.setState({
+			selectedAttributes: { ...this.state.selectedAttributes, [type]: value },
+		});
 	};
 
 	displayNextImg = (item) => {
@@ -77,19 +92,25 @@ class App extends Component {
 	};
 
 	updateCardData = (data) => {
-		const { cardData } = this.state;
-		const existingProductIndex = cardData.findIndex((product) => product.id === data.id);
+		const { cardData, selectedAttributes } = this.state;
+
+		const existingProductIndex = cardData.findIndex((product) =>
+			this.areProductsSame(product, data)
+		);
 
 		if (existingProductIndex !== -1) {
 			cardData[existingProductIndex].qty = cardData[existingProductIndex].qty + 1;
 		} else {
-			cardData.push({
-				...data,
-				qty: 1,
-				displayImg: 0,
-				selectedAttributes: [],
-			});
+			if (data.attributes.length === Object.values(selectedAttributes).length) {
+				cardData.push({
+					...data,
+					qty: 1,
+					displayImg: 0,
+					selectedAttributes,
+				});
+			}
 		}
+
 		this.setState({ cardData });
 	};
 
@@ -111,9 +132,12 @@ class App extends Component {
 		}
 		this.setState({ cardData });
 	};
-	emptyCardData = (data) => {
-		// const { cardData } = this.state;
-		this.setState({ cardData: data });
+	emptyCardData = () => {
+		this.setState({ cardData: [] });
+	};
+
+	emptyAttributes = () => {
+		this.setState({ selectedAttributes: {} });
 	};
 
 	getTotalPrice = () => {
@@ -138,8 +162,15 @@ class App extends Component {
 	};
 
 	render() {
-		const { products, currencyType, cardData, successState, currency, card, attributeValue } =
-			this.state;
+		const {
+			products,
+			currencyType,
+			cardData,
+			successState,
+			currency,
+			card,
+			selectedAttributes,
+		} = this.state;
 
 		const totalPrice = this.getTotalPrice();
 		return (
@@ -155,6 +186,7 @@ class App extends Component {
 					currency={currency}
 					handleClickCurrency={this.handleClickCurrency}
 					handleClickCard={this.handleClickCard}
+					attributeValue={selectedAttributes}
 				/>
 				<div onClick={this.handleClickOverlays} className='App'>
 					<Switch>
@@ -195,8 +227,10 @@ class App extends Component {
 									updateCardData={this.updateCardData}
 									currencyType={currencyType}
 									updateAttributeValue={this.updateAttributeValue}
-									getAttributeValue={this.getAttributeValue}
-									attributeValue={attributeValue}
+									setAttributeValue={this.setAttributeValue}
+									selectedAttributes={selectedAttributes}
+									emptyAttributes={this.emptyAttributes}
+									card={card}
 									{...props}
 								/>
 							)}
@@ -209,6 +243,7 @@ class App extends Component {
 								currencyType={currencyType}
 								displayNextImg={this.displayNextImg}
 								displayPreviousImg={this.displayPreviousImg}
+								card={card}
 							/>
 						</Route>
 						<Route path='/checkout'>
@@ -218,11 +253,12 @@ class App extends Component {
 								totalPrice={totalPrice}
 								checkSuccessState={this.checkSuccessState}
 								emptyCardData={this.emptyCardData}
+								card={card}
 							/>
 						</Route>
 						{successState && (
 							<Route path='/success'>
-								<SuccessPage />
+								<SuccessPage card={card} />
 							</Route>
 						)}
 						<Route component={NotFoundPage} />

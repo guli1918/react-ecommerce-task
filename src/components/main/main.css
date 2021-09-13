@@ -128,6 +128,25 @@
 	cursor: pointer;
 }
 
+.cards-disable {
+	position: relative;
+	bottom: 4.4rem;
+	left: 20.5rem;
+	border-radius: 50%;
+	background-color: #5ece7b;
+	width: 45px;
+	height: 45px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: gray;
+	cursor: not-allowed;
+}
+
+.cards-disable:hover {
+	background-color: rgb(146, 146, 146);
+}
+
 .shopping-card {
 	width: 20px;
 }

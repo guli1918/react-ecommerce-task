@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import CurrencyType from '../currencyType/CurrencyType';
 import './card.css';
 
 export default class Card extends Component {
@@ -11,11 +12,11 @@ export default class Card extends Component {
 		this.props.displayPreviousImg(item);
 	};
 	render() {
-		const { cardData, currencyType, attributeValue, updateCardData, decreaseCardData } =
+		const { cardData, currencyType, attributeValue, updateCardData, decreaseCardData, card } =
 			this.props;
 
 		return (
-			<div className='card'>
+			<div className={card ? 'card-noFocus' : 'card'}>
 				<h2 className='card-main-title'>CART</h2>
 				{cardData.length > 0 ? (
 					<div className='card-products'>
@@ -33,19 +34,8 @@ export default class Card extends Component {
 									</Link>
 									<div className='card-product-left-price'>
 										<p>
-											{item.prices.map(
-												(price) =>
-													price.currency === currencyType &&
-													(price.currency === 'USD'
-														? '$' + price.amount.toFixed(2) * item.qty
-														: price.currency === 'GBP'
-														? '£' + price.amount.toFixed(2) * item.qty
-														: price.currency === 'AUD'
-														? 'A$' + price.amount.toFixed(2) * item.qty
-														: price.currency === 'JPY'
-														? '¥' + price.amount.toFixed(2) * item.qty
-														: '₽' + price.amount.toFixed(2))
-											)}
+											{/* here */}
+											<CurrencyType item={item} currencyType={currencyType} />
 										</p>
 									</div>
 									<div className='card-product-left-attributes'>
