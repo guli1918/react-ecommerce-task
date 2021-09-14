@@ -63,7 +63,7 @@ export default class CategoryPage extends Component {
 	}
 	render() {
 		const { isLoading, hover } = this.state;
-		const { categoryName, products, card, currencyType, updateCardData } = this.props;
+		const { categoryName, products, card, currencyType } = this.props;
 
 		return (
 			<div className='main'>
