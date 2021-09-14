@@ -60,7 +60,10 @@ class App extends Component {
 		const { cardData, selectedAttributes } = this.state;
 		const existingProductIndex = cardData.findIndex((d) => this.areProductsSame(d, product));
 
-		if (existingProductIndex !== -1) {
+		if (
+			existingProductIndex !== -1 &&
+			product.attributes.length === Object.values(selectedAttributes).length
+		) {
 			cardData[existingProductIndex].selectedAttributes = selectedAttributes;
 		} else {
 			alert('Please choose item attributes first!');
@@ -101,29 +104,36 @@ class App extends Component {
 		if (existingProductIndex !== -1) {
 			cardData[existingProductIndex].qty = cardData[existingProductIndex].qty + 1;
 		} else {
-			if (data.attributes.length === Object.values(selectedAttributes).length) {
+			data.attributes.length === Object.values(selectedAttributes).length &&
 				cardData.push({
 					...data,
 					qty: 1,
 					displayImg: 0,
 					selectedAttributes,
 				});
-			}
 		}
 
 		this.setState({ cardData });
 	};
 
-	decreaseCardData = (data) => {
+	increaseItemQuantity = (productIndex) => {
 		const { cardData } = this.state;
-		const productIndex = cardData.findIndex((product) => product.id === data.id);
 
-		if (cardData[productIndex].qty > 1) {
-			cardData[productIndex].qty = cardData[productIndex].qty - 1;
+		cardData[productIndex].qty += 1;
+		this.setState({ cardData });
+	};
+
+	decreaseItemQuantity = (productIndex) => {
+		const { cardData } = this.state;
+		const product = cardData[productIndex];
+
+		if (product.qty > 1) {
+			product.qty = product.qty - 1;
+			cardData[productIndex] = product;
 		} else {
 			const result = window.confirm(
 				`Are you sure you want to remove "${
-					cardData[productIndex].brand + ' ' + cardData[productIndex].name
+					product.brand + ' ' + product.name
 				}" from basket?`
 			);
 			if (result === true) {
@@ -132,6 +142,7 @@ class App extends Component {
 		}
 		this.setState({ cardData });
 	};
+
 	emptyCardData = () => {
 		this.setState({ cardData: [] });
 	};
@@ -180,13 +191,14 @@ class App extends Component {
 					updateCurrencyType={this.updateCurrencyType}
 					cardData={cardData}
 					updateCardData={this.updateCardData}
-					decreaseCardData={this.decreaseCardData}
 					totalPrice={totalPrice}
 					card={card}
 					currency={currency}
 					handleClickCurrency={this.handleClickCurrency}
 					handleClickCard={this.handleClickCard}
 					attributeValue={selectedAttributes}
+					increaseItemQuantity={this.increaseItemQuantity}
+					decreaseItemQuantity={this.decreaseItemQuantity}
 				/>
 				<div onClick={this.handleClickOverlays} className='App'>
 					<Switch>
@@ -243,6 +255,8 @@ class App extends Component {
 								currencyType={currencyType}
 								displayNextImg={this.displayNextImg}
 								displayPreviousImg={this.displayPreviousImg}
+								increaseItemQuantity={this.increaseItemQuantity}
+								decreaseItemQuantity={this.decreaseItemQuantity}
 								card={card}
 							/>
 						</Route>

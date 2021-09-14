@@ -3,7 +3,7 @@ import parse from 'html-react-parser';
 
 import './checkout.css';
 import PaymentForm from '../paymentForm/PaymentForm';
-import CurrencyType from '../currencyType/CurrencyType';
+import CurrencyType, { CurrencySymbolMap } from '../currencyType/CurrencyType';
 
 export default class Checkout extends Component {
 	render() {
@@ -13,18 +13,39 @@ export default class Checkout extends Component {
 		return (
 			<div className={card ? 'checkout-noFocus' : 'checkout'}>
 				<h3 className='checkout-title'>CHECKOUT</h3>
-				{cardData.map((item) => (
-					<div key={item.id} className='checkout-products'>
+				{cardData.map((item, index) => (
+					<div key={index} className='checkout-products'>
 						<div className='checkout-product'>
 							<div className='checkout-product-left'>
 								<h3>
-									{item.name} <span> x{item.qty}</span>
+									{item.name}
+									<span className='checkout-product-left-qty'> x{item.qty}</span>
+									<span className='checkout-product-left-attributes'>
+										{Object.values(item.selectedAttributes).map(
+											(attribute, index) => (
+												<div key={index}>
+													<span>
+														{Object.keys(item.selectedAttributes)[
+															index
+														] + ': '}
+														<span className='checkout-product-left-attribute'>
+															{attribute.id + ' '}
+														</span>
+													</span>
+												</div>
+											)
+										)}
+									</span>
 								</h3>
 								{parse(item.description)}
 							</div>
 							<div className='checkout-product-right'>
 								<p>
-									<CurrencyType item={item} currencyType={currencyType} />
+									<CurrencyType
+										item={item}
+										currencyType={currencyType}
+										quantity={item.qty}
+									/>
 								</p>
 							</div>
 						</div>
@@ -33,15 +54,7 @@ export default class Checkout extends Component {
 				<div className='checkout-price'>
 					<h3>TOTAL</h3>
 					<p>
-						{currencyType === 'USD'
-							? '$'
-							: currencyType === 'GBP'
-							? '£'
-							: currencyType === 'AUD'
-							? 'A$'
-							: currencyType === 'JPY'
-							? '¥'
-							: '₽'}
+						{CurrencySymbolMap[currencyType]}
 						{totalPrice.toFixed(2)}
 					</p>
 				</div>

@@ -48,7 +48,7 @@
 }
 
 .miniCard-left-attribute {
-	font-size: 8px;
+	font-size: 14px;
 	margin-top: 10px;
 	margin-right: 5px;
 	width: 32px;
@@ -61,8 +61,17 @@
 	text-align: center;
 }
 
+.miniCard-left-attribute-text {
+	font-size: 0.5vw;
+	font-weight: 500;
+}
+
 .minicard-left-attributes {
 	display: flex;
+}
+
+.miniCard-left-attribute p {
+	font-size: 10px;
 }
 
 .miniCard-middle {

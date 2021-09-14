@@ -115,21 +115,16 @@ export default class CategoryPage extends Component {
 												)}
 											</p>
 										</div>
+										{hover === d.id && (
+											<div className={d.inStock ? 'cards ' : 'cards-disable'}>
+												<img
+													className='shopping-card'
+													src='assets/card.png'
+													alt=''
+												/>
+											</div>
+										)}
 									</Link>
-									{hover === d.id && (
-										<div
-											onClick={() => {
-												d.inStock && updateCardData(d);
-											}}
-											className={d.inStock ? 'cards ' : 'cards-disable'}
-										>
-											<img
-												className='shopping-card'
-												src='assets/card.png'
-												alt=''
-											/>
-										</div>
-									)}
 								</div>
 							))
 						) : (

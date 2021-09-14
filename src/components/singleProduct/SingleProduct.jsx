@@ -4,11 +4,11 @@ import Loader from 'react-loader-spinner';
 import parse from 'html-react-parser';
 
 import './singleProduct.css';
+import CurrencyType from '../currencyType/CurrencyType';
 
 class SingleProduct extends Component {
 	state = {
 		image: 0,
-		size: null,
 		product: null,
 		isLoading: true,
 	};
@@ -104,8 +104,8 @@ class SingleProduct extends Component {
 										onClick={() => this.imageClick(index)}
 										className={
 											image === index
-												? 'secondary-img secondary-active'
-												: 'secondary-img'
+												? 'secondary-img secondary-active copy-disable'
+												: 'secondary-img copy-disable'
 										}
 										src={img}
 										id={index}
@@ -116,7 +116,11 @@ class SingleProduct extends Component {
 						</div>
 						<div className='product-middle'>
 							{product.gallery.length > 0 && (
-								<img className='main-img' src={product.gallery[image]} alt='' />
+								<img
+									className='main-img copy-disable'
+									src={product.gallery[image]}
+									alt=''
+								/>
 							)}
 						</div>
 						<div className='product-right'>
@@ -173,8 +177,8 @@ class SingleProduct extends Component {
 																	selectedAttributes[type.name] &&
 																	selectedAttributes[type.name]
 																		.id === item.id
-																		? 'size-box size-box-active'
-																		: 'size-box'
+																		? 'size-box size-box-active copy-disable'
+																		: 'size-box copy-disable'
 																}
 															>
 																{item.displayValue}
@@ -187,30 +191,19 @@ class SingleProduct extends Component {
 							<div className='right-price'>
 								<h3 className='right-price-text'>PRICE:</h3>
 								<h4 className='right-price-amount'>
-									{currencyType ? (
-										<>
-											{product.prices[0].currency === currencyType &&
-												'$' + product.prices[0].amount}
-											{product.prices[1].currency === currencyType &&
-												'₤' + product.prices[1].amount}
-											{product.prices[2].currency === currencyType &&
-												'A$' + product.prices[2].amount}
-											{product.prices[3].currency === currencyType &&
-												'¥' + product.prices[3].amount}
-											{product.prices[4].currency === currencyType &&
-												'₽' + product.prices[4].amount}
-										</>
-									) : (
-										'$' + product.prices[0].amount
-									)}
+									<CurrencyType
+										item={product}
+										currencyType={currencyType}
+										quantity={1}
+									/>
 								</h4>
 							</div>
 							<div
 								onClick={() => product.inStock && this.updateCard(product)}
 								className={
 									product.inStock
-										? 'add-to-card'
-										: 'add-to-card add-to-card-disable'
+										? 'add-to-card copy-disable'
+										: 'add-to-card add-to-card-disable copy-disable'
 								}
 							>
 								<p>ADD TO CARD</p>

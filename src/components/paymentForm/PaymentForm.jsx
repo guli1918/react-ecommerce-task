@@ -99,7 +99,7 @@ export default class PaymentForm extends Component {
 					formCVC &&
 					cardData.length > 0 ? (
 						<Link onClick={this.checkSuccessState} className='form-link' to='/success'>
-							<button type='submit' className='checkout-form-button'>
+							<button type='submit' className='checkout-form-button copy-disable'>
 								PAY NOW
 							</button>
 						</Link>
@@ -107,7 +107,7 @@ export default class PaymentForm extends Component {
 						<button
 							onClick={this.checkCartCount}
 							type='submit'
-							className='checkout-form-button-disabled'
+							className='checkout-form-button-disabled copy-disable'
 						>
 							PAY NOW
 						</button>

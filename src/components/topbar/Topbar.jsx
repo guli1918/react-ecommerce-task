@@ -47,17 +47,16 @@ class Topbar extends Component {
 			updateCurrencyType,
 			cardData,
 			existingProduct,
-			updateCardData,
-			decreaseCardData,
-			attributeValue,
 			totalPrice,
 			card,
 			currency,
+			increaseItemQuantity,
+			decreaseItemQuantity,
 		} = this.props;
 
 		const itemQuantity = this.props.cardData.reduce((a, item) => a + item.qty, 0);
 		return (
-			<div className='topbar'>
+			<div className='topbar copy-disable'>
 				<div className='wrapper'>
 					<div className='left'>
 						<ul className='left-list'>
@@ -156,11 +155,10 @@ class Topbar extends Component {
 									cardClick={this.handleCardClick}
 									cardData={cardData}
 									existingProduct={existingProduct}
-									updateCardData={updateCardData}
-									decreaseCardData={decreaseCardData}
 									currencyType={currencyType}
-									attributeValue={attributeValue}
 									totalPrice={totalPrice}
+									increaseItemQuantity={increaseItemQuantity}
+									decreaseItemQuantity={decreaseItemQuantity}
 								/>
 							)}
 						</div>

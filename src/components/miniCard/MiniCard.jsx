@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import CurrencyType from '../currencyType/CurrencyType';
+import CurrencyType, { CurrencySymbolMap } from '../currencyType/CurrencyType';
 
 import './miniCard.css';
 
@@ -14,11 +14,10 @@ export default class MiniCard extends Component {
 		const {
 			cardData,
 			currencyType,
-			attributeValue,
-			updateCardData,
-			decreaseCardData,
 			totalPrice,
 			cardClick,
+			increaseItemQuantity,
+			decreaseItemQuantity,
 		} = this.props;
 
 		const itemQuantity = this.props.cardData.reduce((a, item) => a + item.qty, 0);
@@ -33,7 +32,12 @@ export default class MiniCard extends Component {
 									<span>Cart is empty!</span>
 								) : (
 									<>
-										My Bag, <span>{itemQuantity} items</span>
+										My Bag,{' '}
+										<span>
+											{itemQuantity === 1
+												? itemQuantity + ' item'
+												: itemQuantity + ' items'}
+										</span>
 									</>
 								)}
 							</h3>
@@ -49,6 +53,7 @@ export default class MiniCard extends Component {
 												<CurrencyType
 													item={item}
 													currencyType={currencyType}
+													quantity={item.qty}
 												/>
 											</div>
 											{
@@ -60,30 +65,40 @@ export default class MiniCard extends Component {
 																<div
 																	key={index}
 																	className='miniCard-left-attribute'
+																	style={{
+																		backgroundColor:
+																			attributes.value.startsWith(
+																				'#'
+																			) &&
+																			attributes.id !==
+																				'Black'
+																				? 'light' +
+																				  attributes.id
+																				: attributes.id,
+																	}}
 																>
-																	<p>{attributes.value}</p>
+																	<p className='miniCard-left-attribute-text'>
+																		{attributes.value.startsWith(
+																			'#'
+																		)
+																			? ''
+																			: attributes.value}
+																	</p>
 																</div>
 															)
 														)
 													) : (
 														<div className='miniCard-left-attribute'>
-															<p>
-																{/* {item.attributes[0].items[0].value}
-																{
-																	item.attributes[0].items[0]
-																		.displayValue
-																} */}
-																DFLT
-															</p>
+															<p>DFLT</p>
 														</div>
 													)}
 												</div>
 											}
 										</div>
 										<div className='miniCard-middle'>
-											<p onClick={() => updateCardData(item)}>+</p>
+											<p onClick={() => increaseItemQuantity(index)}>+</p>
 											<h3>{item.qty}</h3>
-											<p onClick={() => decreaseCardData(item)}>-</p>
+											<p onClick={() => decreaseItemQuantity(index)}>-</p>
 										</div>
 										<div className='miniCard-right'>
 											<>
@@ -103,15 +118,7 @@ export default class MiniCard extends Component {
 							<div className='miniCard-bottom-amount'>
 								<p>Total</p>
 								<span>
-									{currencyType === 'USD'
-										? '$'
-										: currencyType === 'GBP'
-										? '£'
-										: currencyType === 'AUD'
-										? 'A$'
-										: currencyType === 'JPY'
-										? '¥'
-										: '₽'}
+									{CurrencySymbolMap[currencyType]}
 									{totalPrice.toFixed(2)}
 								</span>
 							</div>

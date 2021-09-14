@@ -12,7 +12,7 @@ export default class Card extends Component {
 		this.props.displayPreviousImg(item);
 	};
 	render() {
-		const { cardData, currencyType, attributeValue, updateCardData, decreaseCardData, card } =
+		const { cardData, currencyType, card, increaseItemQuantity, decreaseItemQuantity } =
 			this.props;
 
 		return (
@@ -34,34 +34,46 @@ export default class Card extends Component {
 									</Link>
 									<div className='card-product-left-price'>
 										<p>
-											{/* here */}
-											<CurrencyType item={item} currencyType={currencyType} />
+											<CurrencyType
+												item={item}
+												currencyType={currencyType}
+												quantity={item.qty}
+											/>
 										</p>
 									</div>
-									<div className='card-product-left-attributes'>
-										<div className='card-product-left-attribute'>
-											{attributeValue
-												? item.attributes.length > 0
-													? item.attributes.map((attribute) =>
-															attribute.items[attributeValue]
-																? attribute.items[attributeValue]
-																		.displayValue
-																: attribute.items[0].displayValue
-													  )
-													: 'none'
-												: 'DFLT'}
-										</div>
+									<div className='card-product-left-attributes copy-disable'>
+										{Object.values(item.selectedAttributes).map(
+											(attributes, index) => (
+												<div
+													key={index}
+													className='card-product-left-attribute'
+													style={{
+														backgroundColor:
+															attributes.value.startsWith('#') &&
+															attributes.id !== 'Black'
+																? 'light' + attributes.id
+																: attributes.id,
+													}}
+												>
+													<p>
+														{attributes.value.startsWith('#')
+															? ''
+															: attributes.value}
+													</p>
+												</div>
+											)
+										)}
 									</div>
 								</div>
-								<div className='card-product-middle'>
-									<p onClick={() => updateCardData(item)}>+</p>
+								<div className='card-product-middle copy-disable'>
+									<p onClick={() => increaseItemQuantity(index)}>+</p>
 									<h3>{item.qty}</h3>
-									<p onClick={() => decreaseCardData(item)}>–</p>
+									<p onClick={() => decreaseItemQuantity(index)}>–</p>
 								</div>
 								<div className='card-product-right'>
 									<>
 										{item.gallery.length > 1 && (
-											<div className='card-product-inner'>
+											<div className='card-product-inner copy-disable'>
 												<img
 													onClick={() => this.displayPreviousImg(item)}
 													className='card-right-arrows arrow-left'
@@ -77,7 +89,7 @@ export default class Card extends Component {
 											</div>
 										)}
 										<img
-											className='card-right-main'
+											className='card-right-main copy-disable'
 											src={item.gallery[item.displayImg]}
 											alt=''
 										/>
@@ -89,8 +101,8 @@ export default class Card extends Component {
 				) : (
 					<p>Cart is empty!</p>
 				)}
-				<div className='card-bottom'>
-					<Link className='card-bottom-link' to='/'>
+				<div className='card-bottom copy-disable'>
+					<Link className='card-bottom-link ' to='/'>
 						<p className='card-bottom-link-1'>GO BACK</p>
 					</Link>
 					<Link className='card-bottom-link' to='/checkout'>

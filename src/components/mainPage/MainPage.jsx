@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Loader from 'react-loader-spinner';
+
 import './mainPage.css';
+import CurrencyType from '../currencyType/CurrencyType';
 
 export default class MainPage extends Component {
 	state = {
@@ -50,7 +52,7 @@ export default class MainPage extends Component {
 	}
 	render() {
 		const { isLoading, hover } = this.state;
-		const { products, card, currencyType, updateCardData } = this.props;
+		const { products, card, currencyType } = this.props;
 
 		return !isLoading ? (
 			products.map((d, index) => (
@@ -64,46 +66,36 @@ export default class MainPage extends Component {
 					<Link className='links' to={`/product/${d.id}`}>
 						<div className='img'>
 							<img
-								className={!d.inStock ? 'main-imgs noStock' : 'main-imgs'}
+								className={
+									!d.inStock
+										? 'main-imgs noStock copy-disable'
+										: 'main-imgs copy-disable'
+								}
 								src={d.gallery[0]}
 								alt={d.id}
 							/>
-							<div className='outOfStock'>{!d.inStock && <h3>OUT OF STOCK</h3>}</div>
+							<div className='outOfStock copy-disable'>
+								{!d.inStock && <h3>OUT OF STOCK</h3>}
+							</div>
 						</div>
 						<div className='product-desc'>
 							<h4>
 								{d.brand} {d.name}
 							</h4>
 							<p>
-								{currencyType ? (
-									<>
-										{d.prices[0].currency === currencyType &&
-											'$' + d.prices[0].amount}
-										{d.prices[1].currency === currencyType &&
-											'₤' + d.prices[1].amount}
-										{d.prices[2].currency === currencyType &&
-											'A$' + d.prices[2].amount}
-										{d.prices[3].currency === currencyType &&
-											'¥' + d.prices[3].amount}
-										{d.prices[4].currency === currencyType &&
-											'₽' + d.prices[4].amount}
-									</>
-								) : (
-									'$' + d.prices[0].amount
-								)}
+								<CurrencyType item={d} currencyType={currencyType} quantity={1} />
 							</p>
 						</div>
+						{hover === d.id && (
+							<div
+								className={
+									d.inStock ? 'cards copy-disable ' : 'cards-disable copy-disable'
+								}
+							>
+								<img className='shopping-card' src='assets/card.png' alt='' />
+							</div>
+						)}
 					</Link>
-					{hover === d.id && (
-						<div
-							onClick={() => {
-								d.inStock && updateCardData(d);
-							}}
-							className={d.inStock ? 'cards ' : 'cards-disable'}
-						>
-							<img className='shopping-card' src='assets/card.png' alt='' />
-						</div>
-					)}
 				</div>
 			))
 		) : (

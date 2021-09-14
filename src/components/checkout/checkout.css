@@ -32,11 +32,26 @@
 
 .checkout-product-left h3 span {
 	font-weight: 400;
+	margin-bottom: 20px;
 }
 .checkout-product-left h1 {
 	font-weight: 600;
 	margin-top: 10px;
 	font-size: 20px;
+}
+
+.checkout-product-left-qty {
+	color: gray;
+	font-weight: 400;
+}
+
+.checkout-product-left-attributes {
+	display: block;
+	font-size: 10px;
+}
+
+.checkout-product-left-attribute {
+	font-weight: 300;
 }
 
 .checkout-product-right p {

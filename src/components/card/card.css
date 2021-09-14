@@ -66,6 +66,10 @@
 	width: 50px;
 }
 
+.card-product-left-attributes {
+	display: flex;
+}
+
 .card-product-left-attribute {
 	width: 63px;
 	height: 45px;
@@ -75,6 +79,7 @@
 	align-items: center;
 	cursor: pointer;
 	text-align: center;
+	margin-right: 6px;
 }
 
 .card-product-middle {

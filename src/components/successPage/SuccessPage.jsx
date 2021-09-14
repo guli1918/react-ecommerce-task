@@ -9,11 +9,11 @@ export default class SuccessPage extends Component {
 		return (
 			<div className={card ? 'success-noFocus' : 'success'}>
 				<div className='success-content'>
-					<img src='assets/success.png' alt='' />
+					<img className='copy-disable' src='assets/success.png' alt='' />
 					<h3 className='success-main'>Thank you, enjoy!</h3>
 					<p className='success-text'>Your order is being proccessed.</p>
 					<Link className='success-link' to='/'>
-						<p className='success-button'>BACK HOME</p>
+						<p className='success-button copy-disable'>BACK HOME</p>
 					</Link>
 				</div>
 			</div>

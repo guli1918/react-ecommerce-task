@@ -167,6 +167,11 @@
 	font-weight: 600;
 	background-color: #6dd388;
 }
+
+.add-to-card:active {
+	font-weight: 700;
+	background-color: #54c272;
+}
 .add-to-card-disable {
 	cursor: not-allowed;
 	background-color: gray;
