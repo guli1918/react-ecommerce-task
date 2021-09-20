@@ -1,6 +1,4 @@
 import React, { PureComponent } from 'react';
-import Loader from 'react-loader-spinner';
-import ProductLink from '../../components/productLink/ProductLink';
 import RenderProducts from '../../components/renderProducts.jsx/RenderProducts';
 
 import './categoryPage.css';
