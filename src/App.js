@@ -1,18 +1,18 @@
 import './App.css';
 
-import React, { Component } from 'react';
-import Topbar from './components/topbar/Topbar';
+import React, { PureComponent } from 'react';
 import Main from './components/main/Main';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
-import SingleProduct from './components/singleProduct/SingleProduct';
-import NotFoundPage from './components/notFoundPage/NotFoundPage';
-import Checkout from './components/checkout/Checkout';
-import Card from './components/card/Card';
-import SuccessPage from './components/successPage/SuccessPage';
-import CategoryPage from './components/categoryPage/CategoryPage';
+import SingleProduct from './pages/SingleProductPage/SingleProduct';
+import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
+import Checkout from './pages/CheckoutPage/Checkout';
+import Cart from './pages/Cart/Cart';
+import SuccessPage from './pages/SuccessPage/SuccessPage';
+import CategoryPage from './pages/CategoryPage/CategoryPage';
 import arraysEqual from '../src/utils/array';
+import TopBar from './components/topBar/TopBar';
 
-class App extends Component {
+class App extends PureComponent {
 	state = {
 		products: [],
 		currencyType: 'USD',
@@ -42,9 +42,7 @@ class App extends Component {
 	/*
 		Function to check if there is already the same product(alongside its attributes) in the card.
 	*/
-	areProductsSame = (productInCard, newProduct) => {
-		const { selectedAttributes } = this.state;
-
+	areProductsSame = (productInCard, newProduct, selectedAttributes) => {
 		const selectedAttributeIds = Object.values(selectedAttributes).map((values) => values.id);
 		const productSelectedAttributeIds = Object.values(productInCard.selectedAttributes).map(
 			(values) => values.id
@@ -54,20 +52,6 @@ class App extends Component {
 			productInCard.id === newProduct.id &&
 			arraysEqual(selectedAttributeIds, productSelectedAttributeIds)
 		);
-	};
-
-	updateAttributeValue = (product) => {
-		const { cardData, selectedAttributes } = this.state;
-		const existingProductIndex = cardData.findIndex((d) => this.areProductsSame(d, product));
-
-		if (
-			existingProductIndex !== -1 &&
-			product.attributes.length === Object.values(selectedAttributes).length
-		) {
-			cardData[existingProductIndex].selectedAttributes = selectedAttributes;
-		} else {
-			alert('Please choose item attributes first!');
-		}
 	};
 
 	setAttributeValue = (type, value) => {
@@ -83,7 +67,7 @@ class App extends Component {
 			item.displayImg = item.displayImg + 1;
 		}
 
-		this.setState({ cardData });
+		this.setState({ cardData: [...cardData] });
 	};
 
 	displayPreviousImg = (item) => {
@@ -91,36 +75,37 @@ class App extends Component {
 		if (item.displayImg !== 0) {
 			item.displayImg = item.displayImg - 1;
 		}
-		this.setState({ cardData });
+		this.setState({ cardData: [...cardData] });
 	};
 
-	updateCardData = (data) => {
+	updateCardData = (data, productSelectedAttributes = null) => {
 		const { cardData, selectedAttributes } = this.state;
 
 		const existingProductIndex = cardData.findIndex((product) =>
-			this.areProductsSame(product, data)
+			this.areProductsSame(product, data, productSelectedAttributes || selectedAttributes)
 		);
 
 		if (existingProductIndex !== -1) {
 			cardData[existingProductIndex].qty = cardData[existingProductIndex].qty + 1;
 		} else {
-			data.attributes.length === Object.values(selectedAttributes).length &&
-				cardData.push({
-					...data,
-					qty: 1,
-					displayImg: 0,
-					selectedAttributes,
-				});
+			const productCardData = {
+				...data,
+				selectedAttributes: productSelectedAttributes || selectedAttributes,
+				qty: 1,
+				displayImg: 0,
+			};
+
+			cardData.push(productCardData);
 		}
 
-		this.setState({ cardData });
+		this.setState({ cardData: [...cardData] });
 	};
 
 	increaseItemQuantity = (productIndex) => {
 		const { cardData } = this.state;
 
 		cardData[productIndex].qty += 1;
-		this.setState({ cardData });
+		this.setState({ cardData: [...cardData] });
 	};
 
 	decreaseItemQuantity = (productIndex) => {
@@ -140,7 +125,7 @@ class App extends Component {
 				cardData.splice(productIndex, 1);
 			}
 		}
-		this.setState({ cardData });
+		this.setState({ cardData: [...cardData] });
 	};
 
 	emptyCardData = () => {
@@ -165,13 +150,6 @@ class App extends Component {
 		this.setState({ successState: state });
 	};
 
-	handleClickOverlays = () => {
-		this.setState({
-			card: false,
-			currency: false,
-		});
-	};
-
 	render() {
 		const {
 			products,
@@ -186,21 +164,19 @@ class App extends Component {
 		const totalPrice = this.getTotalPrice();
 		return (
 			<Router>
-				<Topbar
-					currencyType={currencyType}
-					updateCurrencyType={this.updateCurrencyType}
-					cardData={cardData}
-					updateCardData={this.updateCardData}
-					totalPrice={totalPrice}
+				<TopBar
 					card={card}
+					cardData={cardData}
 					currency={currency}
+					currencyType={currencyType}
 					handleClickCurrency={this.handleClickCurrency}
 					handleClickCard={this.handleClickCard}
-					attributeValue={selectedAttributes}
+					totalPrice={totalPrice}
 					increaseItemQuantity={this.increaseItemQuantity}
 					decreaseItemQuantity={this.decreaseItemQuantity}
+					updateCurrencyType={this.updateCurrencyType}
 				/>
-				<div onClick={this.handleClickOverlays} className='App'>
+				<div className='app-container'>
 					<Switch>
 						<Route exact path='/'>
 							<Main
@@ -238,7 +214,6 @@ class App extends Component {
 								<SingleProduct
 									updateCardData={this.updateCardData}
 									currencyType={currencyType}
-									updateAttributeValue={this.updateAttributeValue}
 									setAttributeValue={this.setAttributeValue}
 									selectedAttributes={selectedAttributes}
 									emptyAttributes={this.emptyAttributes}
@@ -248,9 +223,8 @@ class App extends Component {
 							)}
 						/>
 						<Route path='/cart'>
-							<Card
+							<Cart
 								updateCardData={this.updateCardData}
-								decreaseCardData={this.decreaseCardData}
 								cardData={cardData}
 								currencyType={currencyType}
 								displayNextImg={this.displayNextImg}

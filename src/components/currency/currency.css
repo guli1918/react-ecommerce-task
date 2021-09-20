@@ -15,6 +15,7 @@
 	position: relative;
 	right: 25px;
 	bottom: 5px;
+	cursor: default;
 }
 
 .currency ul li {

@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import MainPage from '../mainPage/MainPage';
+import React, { PureComponent } from 'react';
+import MainPage from '../../pages/MainPage/MainPage';
 
 import './main.css';
 
-export default class Main extends Component {
+export default class Main extends PureComponent {
 	state = {
 		name: 'Category Name',
 	};

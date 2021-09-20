@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { Link } from 'react-router-dom';
 
 import './paymentForm.css';
 
-export default class PaymentForm extends Component {
+export default class PaymentForm extends PureComponent {
 	state = {
 		formCardName: '',
 		formCardNumber: '',
@@ -26,7 +26,7 @@ export default class PaymentForm extends Component {
 	};
 	render() {
 		const { formCardName, formCardNumber, formDate1, formDate2, formCVC } = this.state;
-		const { cardData } = this.props;
+		const { cardData, card } = this.props;
 		return (
 			<div className='checkout-details'>
 				<h3>CREDIT CARD DETAILS</h3>
@@ -97,7 +97,8 @@ export default class PaymentForm extends Component {
 					formDate1 &&
 					formDate2 &&
 					formCVC &&
-					cardData.length > 0 ? (
+					cardData.length &&
+					!card > 0 ? (
 						<Link onClick={this.checkSuccessState} className='form-link' to='/success'>
 							<button type='submit' className='checkout-form-button copy-disable'>
 								PAY NOW

@@ -1,5 +1,5 @@
 // eslint-disable-next-line no-unused-vars
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 
 export const CurrencySymbolMap = {
 	USD: '$',
@@ -9,7 +9,7 @@ export const CurrencySymbolMap = {
 	RUB: '₽',
 };
 
-export default class CurrencyType extends Component {
+export default class CurrencyType extends PureComponent {
 	getItemPrice = (amount, quantity) => (amount * quantity).toFixed(2);
 
 	render() {

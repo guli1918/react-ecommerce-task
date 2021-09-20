@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import './currency.css';
-export default class Currency extends Component {
+export default class Currency extends PureComponent {
 	state = {
 		currencyData: null,
 		isLoading: true,
@@ -8,7 +8,7 @@ export default class Currency extends Component {
 
 	currencyConvert = (type) => {
 		this.props.updateCurrencyType(type);
-		this.props.handleClickCurrency(false);
+		this.props.handleClickCurrency(true);
 	};
 
 	async componentDidMount() {
@@ -27,26 +27,28 @@ export default class Currency extends Component {
 		this.setState({ isLoading: false });
 	}
 
-	render() {
+	renderCurrencyData = () => {
 		const { currencyData } = this.state;
+		return currencyData.currencies.map((currency) => (
+			<li key={currency} onClick={() => this.currencyConvert(currency)}>
+				{currency === 'USD'
+					? '$ ' + currency
+					: currency === 'GBP'
+					? '£ ' + currency
+					: currency === 'AUD'
+					? 'A$ ' + currency
+					: currency === 'JPY'
+					? '¥ ' + currency
+					: '₽ ' + currency}
+			</li>
+		));
+	};
+
+	render() {
 		return (
 			!this.state.isLoading && (
 				<div className='currency'>
-					<ul>
-						{currencyData.currencies.map((currency) => (
-							<li key={currency} onClick={() => this.currencyConvert(currency)}>
-								{currency === 'USD'
-									? '$ ' + currency
-									: currency === 'GBP'
-									? '£ ' + currency
-									: currency === 'AUD'
-									? 'A$ ' + currency
-									: currency === 'JPY'
-									? '¥ ' + currency
-									: '₽ ' + currency}
-							</li>
-						))}
-					</ul>
+					<ul>{this.renderCurrencyData()}</ul>
 				</div>
 			)
 		);

@@ -1,8 +1,9 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { Link } from 'react-router-dom';
+
 import './notFoundPage.css';
 
-export default class NotFoundPage extends Component {
+export default class NotFoundPage extends PureComponent {
 	render() {
 		return (
 			<div className='notFoundPage'>

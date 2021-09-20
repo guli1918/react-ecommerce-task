@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { Link } from 'react-router-dom';
 
 import './successPage.css';
 
-export default class SuccessPage extends Component {
+export default class SuccessPage extends PureComponent {
 	render() {
 		const { card } = this.props;
 		return (
