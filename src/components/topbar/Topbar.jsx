@@ -1,11 +1,10 @@
 import React, { PureComponent } from 'react';
-import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
+import DisplayCurrency from '../displayCurrency/DisplayCurrency';
+import MiniCart from '../miniCart/MiniCart';
+import TopbarLinks from '../topbarLinks/TopbarLinks';
 
 import './topBar.css';
-import MiniCart from '../miniCart/MiniCart';
-import DisplayCurrency from '../displayCurrency/DisplayCurrency';
-import TopbarLinks from '../topbarLinks/TopbarLinks';
 
 class MiniCard extends PureComponent {
 	state = {

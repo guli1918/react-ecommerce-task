@@ -84,7 +84,6 @@ class App extends PureComponent {
 		const existingProductIndex = cardData.findIndex((product) =>
 			this.areProductsSame(product, data, productSelectedAttributes || selectedAttributes)
 		);
-
 		if (existingProductIndex !== -1) {
 			cardData[existingProductIndex].qty = cardData[existingProductIndex].qty + 1;
 		} else {

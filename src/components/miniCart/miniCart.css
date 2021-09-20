@@ -14,15 +14,15 @@
 	background-color: rgba(184, 184, 184, 0.05);
 	width: 100%;
 	height: 100%;
-	overflow: auto;
+	overflow: hidden;
 	position: absolute;
-	margin-bottom: 300px;
 }
 
 .miniCard-main {
 	width: 325px;
 	z-index: 10;
-	min-height: 200px;
+	min-height: 250px;
+	overflow-x: hidden;
 	background-color: white;
 	margin-right: 90px;
 	color: #1d1f22;
@@ -194,6 +194,8 @@
 	background-color: #43aa5e;
 	border: 1px solid #43aa5e;
 	font-weight: 600;
+	font-size: 16px;
+	letter-spacing: -1.5px;
 }
 
 .miniCard-bottom-payment-right:hover {
