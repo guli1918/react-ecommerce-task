@@ -10,7 +10,7 @@ import Cart from './pages/Cart/Cart';
 import SuccessPage from './pages/SuccessPage/SuccessPage';
 import CategoryPage from './pages/CategoryPage/CategoryPage';
 import arraysEqual from '../src/utils/array';
-import TopBar from './components/topBar/TopBar';
+import TopBar from '../src/components/topBar/TopBar';
 
 class App extends PureComponent {
 	state = {
