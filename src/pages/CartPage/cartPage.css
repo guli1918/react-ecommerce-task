@@ -82,10 +82,34 @@
 	margin-right: 6px;
 }
 
+.card-product-left-attribute-yesNo-main {
+	position: relative;
+}
+
 .card-product-left-attribute-yesNo {
 	font-size: 11px;
 	display: block;
 	font-weight: 500;
+}
+
+.card-product-left-attribute-cross1 {
+	width: 1.5px;
+	height: 50px;
+	background-color: black;
+	transform: rotate(-45deg);
+	position: absolute;
+	left: 30px;
+	top: -11px;
+}
+
+.card-product-left-attribute-cross2 {
+	width: 1.5px;
+	height: 50px;
+	background-color: black;
+	transform: rotate(45deg);
+	position: absolute;
+	left: 30px;
+	top: -11px;
 }
 
 .card-product-left-attribute-value {

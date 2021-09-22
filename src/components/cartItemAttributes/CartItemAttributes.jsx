@@ -18,11 +18,17 @@ export default class CartItemAttributes extends PureComponent {
 					{attributes.value.startsWith('#') ? (
 						''
 					) : attributes.value === 'Yes' || attributes.value === 'No' ? (
-						<>
+						<div className='card-product-left-attribute-yesNo-main'>
 							<span className='card-product-left-attribute-yesNo'>
+								{attributes.value === 'No' && (
+									<div className='card-product-left-attribute-cross1' />
+								)}
 								{Object.keys(item.selectedAttributes)[index]}
+								{attributes.value === 'No' && (
+									<div className='card-product-left-attribute-cross2' />
+								)}
 							</span>
-						</>
+						</div>
 					) : (
 						attributes.value
 					)}

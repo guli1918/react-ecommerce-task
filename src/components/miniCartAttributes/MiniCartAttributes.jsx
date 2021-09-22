@@ -16,28 +16,34 @@ export default class MiniCartAttributes extends PureComponent {
 								: attributes.id,
 					}}
 				>
-					<p className='miniCard-left-attribute-text'>
+					<div className='miniCard-left-attribute-text'>
 						{attributes.value.startsWith('#') ? (
 							''
 						) : (
-							<p>
+							<>
 								{attributes.value.startsWith('#') ? (
 									''
 								) : attributes.value === 'Yes' || attributes.value === 'No' ? (
-									<>
+									<div className='miniCard-product-left-attribute-yesNo-main'>
 										<span className='miniCard-product-left-attribute-yesNo'>
+											{attributes.value === 'No' && (
+												<div className='miniCard-product-left-attribute-cross1' />
+											)}
 											{Object.keys(item.selectedAttributes)[index].slice(
 												0,
 												9
 											)}
+											{attributes.value === 'No' && (
+												<div className='miniCard-product-left-attribute-cross2' />
+											)}
 										</span>
-									</>
+									</div>
 								) : (
 									attributes.value
 								)}
-							</p>
+							</>
 						)}
-					</p>
+					</div>
 				</div>
 			))
 		);

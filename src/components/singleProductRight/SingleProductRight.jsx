@@ -5,10 +5,18 @@ import CurrencyType from '../currencyType/CurrencyType';
 
 export default class SingleProductRight extends PureComponent {
 	updateCard = (product) => {
-		this.props.updateCardData(product);
+		const { selectedAttributes, card } = this.props;
+		const attributesEqual =
+			Object.values(selectedAttributes).length === Object.keys(product.attributes).length;
+		product.inStock
+			? !card && attributesEqual
+				? this.props.updateCardData(product)
+				: alert('Choose attribute(s) first to add this item!')
+			: alert('Product not available!');
 	};
+
 	render() {
-		const { product, selectedAttributes, setAttributeValue, currencyType, card } = this.props;
+		const { product, selectedAttributes, setAttributeValue, currencyType } = this.props;
 		return (
 			<div className='product-right'>
 				<div className='right-title'>
@@ -28,7 +36,7 @@ export default class SingleProductRight extends PureComponent {
 					</h4>
 				</div>
 				<div
-					onClick={() => product.inStock && !card && this.updateCard(product)}
+					onClick={() => this.updateCard(product)}
 					className={
 						product.inStock
 							? 'add-to-card copy-disable'

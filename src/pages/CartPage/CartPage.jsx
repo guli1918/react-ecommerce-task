@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { Link } from 'react-router-dom';
 import CartItems from '../../components/cartItems/CartItems';
-import './card.css';
+import './cartPage.css';
 
 export default class Card extends PureComponent {
 	render() {

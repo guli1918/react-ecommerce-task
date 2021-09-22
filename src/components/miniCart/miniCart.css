@@ -81,7 +81,6 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	cursor: pointer;
 	text-align: center;
 }
 
@@ -209,8 +208,32 @@
 	color: inherit;
 }
 
+.miniCard-product-left-attribute-yesNo-main {
+	position: relative;
+}
+
 .miniCard-product-left-attribute-yesNo {
 	font-size: 10px;
+}
+
+.miniCard-product-left-attribute-cross1 {
+	position: absolute;
+	left: 15px;
+	top: 0;
+	width: 1.25px;
+	height: 28px;
+	background-color: black;
+	transform: rotate(-45deg);
+}
+
+.miniCard-product-left-attribute-cross2 {
+	position: absolute;
+	left: 15px;
+	top: 0;
+	width: 1.25px;
+	height: 28px;
+	background-color: black;
+	transform: rotate(45deg);
 }
 
 @media screen and (max-width: 430px) {

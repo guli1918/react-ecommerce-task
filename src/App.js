@@ -1,16 +1,16 @@
-import './App.css';
-
 import React, { PureComponent } from 'react';
 import Main from './components/main/Main';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import SingleProduct from './pages/SingleProductPage/SingleProduct';
 import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
 import Checkout from './pages/CheckoutPage/Checkout';
-import Cart from './pages/Cart/Cart';
+import CartPage from './pages/CartPage/CartPage';
 import SuccessPage from './pages/SuccessPage/SuccessPage';
 import CategoryPage from './pages/CategoryPage/CategoryPage';
 import arraysEqual from '../src/utils/array';
 import TopBar from '../src/components/topBar/TopBar';
+
+import './App.css';
 
 class App extends PureComponent {
 	state = {
@@ -47,8 +47,6 @@ class App extends PureComponent {
 		const productSelectedAttributeIds = Object.values(productInCard.selectedAttributes).map(
 			(values) => values.id
 		);
-
-		console.log(newProduct);
 
 		return (
 			productInCard.id === newProduct.id &&
@@ -226,7 +224,7 @@ class App extends PureComponent {
 							)}
 						/>
 						<Route path='/cart'>
-							<Cart
+							<CartPage
 								updateCardData={this.updateCardData}
 								cardData={cardData}
 								currencyType={currencyType}
