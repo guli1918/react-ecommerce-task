@@ -85,7 +85,7 @@
 .card-product-left-attribute-yesNo {
 	font-size: 11px;
 	display: block;
-	color: gray;
+	font-weight: 500;
 }
 
 .card-product-left-attribute-value {

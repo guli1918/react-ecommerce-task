@@ -3,7 +3,8 @@ import React, { PureComponent } from 'react';
 export default class MiniCartAttributes extends PureComponent {
 	renderSelectedAttributes = () => {
 		const { item } = this.props;
-		return Object.values(item.selectedAttributes).length > 0 ? (
+		return (
+			Object.values(item.selectedAttributes).length > 0 &&
 			Object.values(item.selectedAttributes).map((attributes, index) => (
 				<div
 					key={index}
@@ -16,14 +17,29 @@ export default class MiniCartAttributes extends PureComponent {
 					}}
 				>
 					<p className='miniCard-left-attribute-text'>
-						{attributes.value.startsWith('#') ? '' : attributes.value}
+						{attributes.value.startsWith('#') ? (
+							''
+						) : (
+							<p>
+								{attributes.value.startsWith('#') ? (
+									''
+								) : attributes.value === 'Yes' || attributes.value === 'No' ? (
+									<>
+										<span className='miniCard-product-left-attribute-yesNo'>
+											{Object.keys(item.selectedAttributes)[index].slice(
+												0,
+												9
+											)}
+										</span>
+									</>
+								) : (
+									attributes.value
+								)}
+							</p>
+						)}
 					</p>
 				</div>
 			))
-		) : (
-			<div className='miniCard-left-attribute'>
-				<p>DFLT</p>
-			</div>
 		);
 	};
 	render() {

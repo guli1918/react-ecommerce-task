@@ -52,7 +52,7 @@ class MiniCard extends PureComponent {
 				className={`miniCard-container copy-disable ${card ? 'backdrop' : ''}`}
 				onClick={this.handleBackdropClick}
 			>
-				<div className='topbar'>
+				<div className={card ? 'topbar-backdrop' : 'topbar'}>
 					<div className='wrapper'>
 						<div className='left' style={{ visibility: card ? 'hidden' : 'visible' }}>
 							<TopbarLinks />

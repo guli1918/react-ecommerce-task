@@ -15,7 +15,7 @@
 	width: 100%;
 	height: 100%;
 	overflow: hidden;
-	position: absolute;
+	background-color: transparent;
 }
 
 .miniCard-main {
@@ -207,6 +207,10 @@
 .miniCard-link {
 	text-decoration: none;
 	color: inherit;
+}
+
+.miniCard-product-left-attribute-yesNo {
+	font-size: 10px;
 }
 
 @media screen and (max-width: 430px) {

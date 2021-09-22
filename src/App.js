@@ -89,16 +89,16 @@ class App extends PureComponent {
 		if (existingProductIndex !== -1) {
 			cardData[existingProductIndex].qty = cardData[existingProductIndex].qty + 1;
 		} else {
-			if (Object.values(selectedAttributes).length === Object.keys(data.attributes).length) {
-				const productCardData = {
-					...data,
-					selectedAttributes: productSelectedAttributes || selectedAttributes,
-					qty: 1,
-					displayImg: 0,
-				};
+			// if (Object.values(selectedAttributes).length === Object.keys(data.attributes).length) {
+			const productCardData = {
+				...data,
+				selectedAttributes: productSelectedAttributes || selectedAttributes,
+				qty: 1,
+				displayImg: 0,
+			};
 
-				cardData.push(productCardData);
-			}
+			cardData.push(productCardData);
+			// }
 		}
 
 		this.setState({ cardData: [...cardData] });

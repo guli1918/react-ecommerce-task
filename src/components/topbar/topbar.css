@@ -216,6 +216,16 @@
 	display: flex;
 }
 
+.topbar-backdrop {
+	width: 100%;
+	height: 80px;
+	color: gray;
+	background-color: transparent;
+	position: relative;
+	z-index: 2;
+	display: flex;
+}
+
 .wrapper {
 	padding: 0.5rem 3rem;
 	display: flex;
